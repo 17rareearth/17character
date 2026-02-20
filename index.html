@@ -66,22 +66,29 @@
     <!-- Navigation -->
     <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
+            <div class="flex flex-col md:flex-row justify-between items-center py-2 md:h-16">
     
-                <!-- タイトル＋ロゴ（これ1つだけにする） -->
-                <div class="flex items-center gap-3 text-2xl font-bold text-indigo-700 font-rounded">
+                <div
+                    class="flex items-center gap-2 text-xl md:text-2xl font-bold text-indigo-700 font-rounded mb-2 md:mb-0">
                     <span>RareEarth Characters</span>
-                    <img src="logo1.png" alt="RareEarth Logo" class="h-12 w-auto">
+                    <img src="logo1.png" alt="RareEarth Logo" class="h-8 md:h-12 w-auto">
                 </div>
     
-                <!-- ナビ -->
-            <div class="hidden md:flex space-x-6 text-sm font-medium">
-                <a href="#characters" class="text-slate-600 hover:text-indigo-600 transition">図鑑</a>
-                <a href="#units" class="text-slate-600 hover:text-indigo-600 transition">ユニット</a>
-                <a href="#data" class="text-slate-600 hover:text-indigo-600 transition">データ</a>
-                <a href="#play" class="text-slate-600 hover:text-indigo-600 transition">あそぶ</a>
-                <a href="https://17rareearth.github.io/17character/index_en.html" class="text-slate-600 hover:text-indigo-600 transition">English</a>
-            </div>
+                <div class="flex flex-wrap justify-center gap-x-2 md:gap-x-4 text-[12px] md:text-sm font-bold">
+                    <a href="#characters"
+                        class="px-2 py-1 text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-md transition duration-300">図鑑</a>
+                    <a href="#units"
+                        class="px-2 py-1 text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-md transition duration-300">ユニット</a>
+                    <a href="#data"
+                        class="px-2 py-1 text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-md transition duration-300">データ</a>
+                    <a href="#play"
+                        class="px-2 py-1 text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-md transition duration-300">あそぶ</a>
+    
+                    <a href="https://17rareearth.github.io/17character/index_en.html"
+                        class="px-3 py-1 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition shadow-sm ml-1">
+                        English
+                    </a>
+                </div>
     
             </div>
         </div>
