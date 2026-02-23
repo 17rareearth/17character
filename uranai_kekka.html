@@ -1,88 +1,71 @@
-// ===============================
-// 🔮 レアアース診断ロジック
-// ===============================
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔮 診断結果</title>
 
-// ===== 受験者スコア取得 =====
-let user = JSON.parse(localStorage.getItem("uranaiScore"));
-
-if (!user) {
-  document.getElementById("mainName").textContent = "スコアが見つかりません";
-  throw new Error("No score data found.");
+<style>
+body{
+  font-family:"Hiragino Kaku Gothic ProN", sans-serif;
+  background:#f4f6fb;
+  text-align:center;
+  padding:40px;
 }
 
-// ===== 17元素データ =====
-let elements = [
+.resultBox{
+  background:white;
+  padding:30px;
+  border-radius:16px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08);
+  max-width:500px;
+  margin:0 auto;
+}
 
-{ name:"スカンジウム", E:1, A:1, S:2, C:3, text:"信頼で強くする人。土台を支える安定型。" },
+h1{
+  font-size:26px;
+  margin-bottom:10px;
+}
 
-{ name:"イットリウム", E:1, A:1, S:3, C:2, text:"場を整えるつなぎ役。縁の下の力持ち。" },
+.percent{
+  font-size:22px;
+  color:#5b7cfa;
+  margin-bottom:20px;
+}
 
-{ name:"ランタン", E:3, A:2, S:1, C:1, text:"場を明るく回すまとめ役タイプ。" },
+.sub{
+  margin-top:25px;
+  font-size:14px;
+  color:#666;
+}
 
-{ name:"セリウム", E:2, A:3, S:1, C:2, text:"効率重視の現場監督タイプ。" },
+button{
+  margin-top:30px;
+  padding:10px 20px;
+  border:none;
+  border-radius:10px;
+  background:#5b7cfa;
+  color:white;
+  cursor:pointer;
+}
+</style>
+</head>
 
-{ name:"プラセオジム", E:1, A:1, S:2, C:3, text:"感性派の静かな職人。" },
+<body>
 
-{ name:"プロメチウム", E:0, A:1, S:3, C:3, text:"希少な理論派。深く考える研究者型。" },
+<div class="resultBox">
+  <h1 id="mainName"></h1>
+  <div class="percent" id="mainPercent"></div>
+  <p id="mainText"></p>
+  <p class="sub" id="subType"></p>
+  <p class="sub" id="hiddenType"></p>
 
-{ name:"ネオジム", E:3, A:3, S:1, C:1, text:"行動力と推進力を持つエース型。" },
+  <button onclick="location.href='index_uranai.html'">
+    もう一度診断する
+  </button>
+</div>
 
-{ name:"サマリウム", E:1, A:2, S:2, C:3, text:"高温でも崩れない耐久型。" },
+<script src="js/kekka.js"></script>
 
-{ name:"ユウロピウム", E:3, A:2, S:1, C:1, text:"光って輝くステージ型。" },
-
-{ name:"ガドリニウム", E:1, A:1, S:3, C:2, text:"静かに人を助けるヒーロー型。" },
-
-{ name:"テルビウム", E:0, A:2, S:2, C:3, text:"完璧を追い求める戦略家。" },
-
-{ name:"ジスプロシウム", E:0, A:2, S:3, C:3, text:"壊れない守護者タイプ。" },
-
-{ name:"ホルミウム", E:0, A:2, S:3, C:2, text:"一点集中のスペシャリスト。" },
-
-{ name:"エルビウム", E:0, A:1, S:2, C:3, text:"静かな参謀。情報制御型。" },
-
-{ name:"ツリウム", E:0, A:1, S:3, C:2, text:"控えめな実力者タイプ。" },
-
-{ name:"イッテルビウム", E:0, A:1, S:3, C:2, text:"変化を察知する観測者。" },
-
-{ name:"ルテチウム", E:1, A:3, S:2, C:3, text:"最終判断を下すまとめ役。" }
-
-];
-
-// ===== 最大距離（理論値）=====
-let maxDistance = Math.sqrt(9 + 9 + 13.5 + 9);
-
-// ===== 距離計算 =====
-elements.forEach(el => {
-
-  let distance = Math.sqrt(
-    (user.E - el.E) ** 2 +
-    (user.A - el.A) ** 2 +
-    ((user.S - el.S) ** 2) * 1.5 +
-    (user.C - el.C) ** 2
-  );
-
-  let score = (1 - distance / maxDistance) * 100;
-
-  // 100%にならないように調整
-  el.score = Math.min(Math.round(score), 99);
-});
-
-// ===== スコア順に並び替え =====
-elements.sort((a, b) => b.score - a.score);
-
-// ===== 上位3つ取得 =====
-let first = elements[0];
-let second = elements[1];
-let third = elements[2];
-
-// ===== 表示 =====
-document.getElementById("mainName").textContent = "🧲 " + first.name;
-document.getElementById("mainPercent").textContent = first.score + "%";
-document.getElementById("mainText").textContent = first.text;
-
-document.getElementById("subType").textContent =
-"🧠 " + second.name + " " + second.score + "% の資質も強く持っています。";
-
-document.getElementById("hiddenType").textContent =
-"🌙 Hidden Rare：" + third.name + " " + third.score + "%";
+</body>
+</html>
