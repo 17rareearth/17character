@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔮 レアアース診断｜あなたはどのレアアース？</title>
+
+<style>
+body {
+  font-family: "Hiragino Kaku Gothic ProN", sans-serif;
+  background: #f4f6fb;
+  padding: 20px;
+  line-height: 1.8;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.description {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 14px;
+  color: #555;
+}
+
+.question {
+  background: white;
+  padding: 18px;
+  margin-bottom: 22px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.question p {
+  font-weight: bold;
+  margin-bottom: 14px;
+  font-size: 15px;
+}
+
+.option {
+  display: block;
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.option:hover {
+  background: #eef2ff;
+}
+
+input[type="radio"] {
+  margin-right: 8px;
+}
+
+button {
+  display: block;
+  margin: 40px auto;
+  padding: 14px 28px;
+  font-size: 16px;
+  border: none;
+  border-radius: 12px;
+  background: #5b7cfa;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #4666dd;
+}
+</style>
+
+</head>
+<body>
+
+<h1>🔮 レアアース診断</h1>
+<p class="description">
+12問でわかるレアアース占い<br>
+👉 あてはまるほうをクリックして選んでください
+</p>
+
+<form id="uranaiForm">
+
+<div class="question">
+<p>Q1（承認） がんばったときは</p>
+<label class="option"><input type="radio" name="q1" value="1" required>だれかに気づいてほしい</label>
+<label class="option"><input type="radio" name="q1" value="0">自分でわかっていれば十分</label>
+</div>
+
+<div class="question">
+<p>Q2（ひらめき） アイデアは</p>
+<label class="option"><input type="radio" name="q2" value="1" required>急に思いつくことが多い</label>
+<label class="option"><input type="radio" name="q2" value="0">じっくり考えて出てくる</label>
+</div>
+
+<div class="question">
+<p>Q3（行動） 思いついたら</p>
+<label class="option"><input type="radio" name="q3" value="1" required>すぐ動く</label>
+<label class="option"><input type="radio" name="q3" value="0">まず様子を見る</label>
+</div>
+
+<div class="question">
+<p>Q4（違和感） いつもと様子がちがうことに気づくのは</p>
+<label class="option"><input type="radio" name="q4" value="1" required>わりと多い</label>
+<label class="option"><input type="radio" name="q4" value="0">あまりない</label>
+</div>
+
+<div class="question">
+<p>Q5（こだわり） 好きなことには</p>
+<label class="option"><input type="radio" name="q5" value="1" required>とことんハマる</label>
+<label class="option"><input type="radio" name="q5" value="0">ほどよく楽しむ</label>
+</div>
+
+<div class="question">
+<p>Q6（集中） 作業をしていると</p>
+<label class="option"><input type="radio" name="q6" value="1" required>まわりが見えなくなるくらい集中する</label>
+<label class="option"><input type="radio" name="q6" value="0">バランスよく進める</label>
+</div>
+
+<div class="question">
+<p>Q7（空気） 人がいる場で、空気が変わると</p>
+<label class="option"><input type="radio" name="q7" value="1" required>すぐ気づく</label>
+<label class="option"><input type="radio" name="q7" value="0">あとから気づく</label>
+</div>
+
+<div class="question">
+<p>Q8（レア感） 「みんなとちがう」と言われるのは</p>
+<label class="option"><input type="radio" name="q8" value="1" required>ちょっとうれしい</label>
+<label class="option"><input type="radio" name="q8" value="0">あまりうれしくない</label>
+</div>
+
+<div class="question">
+<p>Q9（信念） 自分の考えは</p>
+<label class="option"><input type="radio" name="q9" value="1" required>わりと曲げない</label>
+<label class="option"><input type="radio" name="q9" value="0">状況に合わせて変えられる</label>
+</div>
+
+<div class="question">
+<p>Q10（挑戦） 新しいことに挑戦するのは</p>
+<label class="option"><input type="radio" name="q10" value="1" required>わくわくする</label>
+<label class="option"><input type="radio" name="q10" value="0">ちょっと不安</label>
+</div>
+
+<div class="question">
+<p>Q11（エネルギー源） 人と話すと</p>
+<label class="option"><input type="radio" name="q11" value="1" required>元気になる</label>
+<label class="option"><input type="radio" name="q11" value="0">つかれる</label>
+</div>
+
+<div class="question">
+<p>Q12（決断） なにかを決めるときは</p>
+<label class="option"><input type="radio" name="q12" value="1" required>わりと早く決められる</label>
+<label class="option"><input type="radio" name="q12" value="0">いろいろ考えてから決める</label>
+</div>
+
+<button type="submit">診断する</button>
+
+</form>
+
+<script src="js/uranai.js"></script>
+
+</body>
+</html>
