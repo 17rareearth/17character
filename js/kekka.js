@@ -6,19 +6,21 @@
 let user = JSON.parse(localStorage.getItem("uranaiScore"));
 
 if (!user) {
-  document.getElementById("resultArea").innerHTML =
-    "<h2>スコアが見つかりません</h2>";
+  // 診断結果ページに直接アクセスした場合などのエラーハンドリング
+  const resultArea = document.getElementById("resultArea");
+  if (resultArea) {
+    resultArea.innerHTML = "<h2>スコアが見つかりません。もう一度診断をやり直してください。</h2>";
+  }
   throw new Error("No score data found.");
 }
 
-// ===== 17元素データ（完全long版）=====
-// ===== 17元素データ 完全版 =====
+// ===== 17元素データ（完全版）=====
 let elements = [
   {
     name: "スカンジウム",
     symbol: "Sc",
     emoji: "🧲",
-    catch: "可能性を底上げする、希代の補強材",
+    catch: "可能性を底上げする、希代 of 補強材",
     short: "信頼で強くする人。土台を支える安定型。",
     long: `あなたは「土台を静かに固める、隠れた功労者」。
 派手なパフォーマンスは好まないけれど、あなたが加わるだけで全体の強度が劇的に上がる、土台を支える力があります。
@@ -221,7 +223,7 @@ let elements = [
     symbol: "Ho",
     emoji: "🎯",
     catch: "一点突破で壁を穿つ、集中力の狙撃手",
-    short: "一点集中型。爆発的スペシャリスト。",
+    short: "一点集中型. 爆発的スペシャリスト。",
     long: `あなたは「一つのことに魂を注ぎ込める、爆発的スペシャリスト」。
 興味がある対象を見つけた時の没頭力は、17元素の中でもナンバーワン。周囲が驚くような熱量で専門性を磨き上げ、他の誰にも真似できない領域に到達する力があります。
 ムラがあるのは、それだけ高いエネルギーを一点に凝縮している証拠。
@@ -323,25 +325,38 @@ elements.sort((a,b)=>b.score-a.score);
 // ===== 上位3 =====
 let top3 = elements.slice(0,3);
 
-// ===== 表示 =====
+// ===== 表示生成 =====
 let resultHTML = "";
 
-top3.forEach((el,index)=>{
+top3.forEach((el, index) => {
+  // 第1位には特別なラベルを付ける
+  const rankLabel = index === 0 ? '<div class="rankLabel">あなたに最も近いレアアース</div>' : `<div class="rankLabel">第 ${index + 1} 位</div>`;
 
-resultHTML += `
+  resultHTML += `
 <div class="resultCard">
-  <h2>${el.emoji} ${el.name}（${el.symbol}）｜ ${el.short}</h2>
-  <h3>キャッチコピー： 「${el.catch}」</h3>
-  <p><strong>${el.score}%</strong></p>
+  ${rankLabel}
+  <h2>${el.emoji} ${el.name}（${el.symbol}）</h2>
+  <p class="shortDesc">${el.short}</p>
+  <h3 class="catchCopy">キャッチコピー： 「${el.catch}」</h3>
+  <div class="scoreDisplay">適合度: <strong>${el.score}%</strong></div>
 
   <img src="images/${el.symbol}.png" alt="${el.name}" class="charImage">
 
   <div class="longText">
-    ${el.long.replace(/\n/g,"<br>")}
+    ${el.long.replace(/\n/g, "<br>")}
+  </div>
+
+  <div class="compatibilityArea">
+    <h4>🤝 相性の良いパートナー</h4>
+    <p><strong>${el.partnerEmoji} ${el.bestPartner}</strong></p>
+    <p class="partnerReason">${el.partnerReason}</p>
   </div>
 </div>
 `;
-
 });
 
-document.getElementById("resultArea").innerHTML = resultHTML;
+// HTMLへの書き出し
+const resultArea = document.getElementById("resultArea");
+if (resultArea) {
+  resultArea.innerHTML = resultHTML;
+}

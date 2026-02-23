@@ -3,75 +3,157 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🔮 診断結果</title>
+<title>🔮 診断結果 | レアアース診断</title>
 
 <style>
-body{
-  font-family:"Hiragino Kaku Gothic ProN",sans-serif;
-  background:#f4f6fb;
-  padding:20px;
-  line-height:1.9;
+/* 全体のデザイン設定 */
+body {
+  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+  background: #f0f2f5;
+  color: #333;
+  margin: 0;
+  padding: 20px;
+  line-height: 1.8;
 }
 
-h1{
-  text-align:center;
+h1 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 30px;
 }
 
-.result-main{
-  text-align:center;
-  margin-bottom:40px;
+/* 結果を表示するメインエリア */
+#resultArea {
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-.percent{
-  font-size:28px;
-  font-weight:bold;
-  margin:10px 0;
+/* 診断結果カードのデザイン */
+.resultCard {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  margin-bottom: 40px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  border-top: 8px solid #5b7cfa;
+  position: relative;
+  overflow: hidden;
 }
 
-.detail{
-  background:white;
-  padding:25px;
-  border-radius:16px;
-  margin-bottom:40px;
-  box-shadow:0 6px 18px rgba(0,0,0,0.06);
+/* 第1位、2位などのラベル */
+.rankLabel {
+  display: inline-block;
+  background: #5b7cfa;
+  color: white;
+  padding: 4px 15px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 15px;
 }
 
-.detail img{
-  width:180px;
-  display:block;
-  margin:15px auto;
+/* 元素名 */
+.resultCard h2 {
+  margin: 0 0 10px 0;
+  font-size: 24px;
+  color: #2c3e50;
 }
 
-.detail h2{
-  margin-bottom:15px;
+/* キャッチコピー */
+.catchCopy {
+  font-size: 18px;
+  font-weight: bold;
+  color: #5b7cfa;
+  margin-bottom: 20px;
+  padding: 10px;
+  background: #f0f4ff;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+/* 適合度スコア */
+.scoreDisplay {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+.scoreDisplay strong {
+  font-size: 24px;
+  color: #e74c3c;
+}
+
+/* キャラクター画像 */
+.charImage {
+  width: 200px;
+  height: auto;
+  display: block;
+  margin: 20px auto;
+}
+
+/* 説明文 */
+.longText {
+  background: #ffffff;
+  padding: 15px 0;
+  border-top: 1px dashed #ddd;
+  margin-top: 20px;
+  font-size: 15px;
+}
+
+/* 相性診断エリア */
+.compatibilityArea {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 25px;
+  border: 1px solid #eef0f2;
+}
+
+.compatibilityArea h4 {
+  margin: 0 0 10px 0;
+  color: #2c3e50;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.partnerReason {
+  font-size: 14px;
+  color: #666;
+  margin: 5px 0 0 0;
+}
+
+/* ボタン（もう一度診断するなど） */
+.actions {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.btn {
+  display: inline-block;
+  background: #2c3e50;
+  color: white;
+  padding: 12px 30px;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.btn:hover {
+  background: #34495e;
 }
 </style>
-
 </head>
 <body>
 
-<h1>🔮 あなたのレアアース結果</h1>
+<h1>🔮 レアアース診断結果</h1>
 
-<div class="result-main">
-  <h2 id="mainName"></h2>
-  <div class="percent" id="mainPercent"></div>
-  <p id="mainShort"></p>
+<div id="resultArea"></div>
+
+<div class="actions">
+  <a href="index_uranai.html" class="btn">もう一度診断する</a>
 </div>
 
-<div id="detail1" class="detail"></div>
-<div id="detail2" class="detail"></div>
-<div id="detail3" class="detail"></div>
-
-<script src="js/uranai_kekka.js"></script>
-
-<h2 id="mainName"></h2>
-<p id="mainCatch"></p>
-<p id="mainDesc"></p>
-<p id="mainAdvice"></p>
-<img id="mainImage" src="" alt="">
-
-<div id="secondResult"></div>
-<div id="thirdResult"></div>
+<script src="js/kekka.js"></script>
 
 </body>
 </html>
