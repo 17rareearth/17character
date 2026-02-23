@@ -13,7 +13,7 @@ if (!user) {
   throw new Error("No score data found.");
 }
 
-// ===== 17元素データ（全データ完全収録） =====
+// ===== 17元素データ =====
 let elements = [
   {
     name: "スカンジウム", symbol: "Sc", emoji: "🧲",
@@ -118,7 +118,7 @@ let elements = [
     name: "ジスプロシウム", symbol: "Dy", emoji: "🛡",
     catch: "最後の砦を守り抜く、鉄壁のディフェンダー",
     short: "守りを固める人。最強の守護神。",
-    long: `あなたは責任感がとても強く、「逆境で真価を発揮する、最強の守護神」です。\nどんなに厳しい状況でも、大切なものを守り抜くために踏ん張れる人。慎重なのは、あなたがそれだけ大きな責任を背負っている証拠。鉄壁の信頼を誇ります。\n\n【アドバイス】\n不安を感じるのは、あなたが未来を予測できている証拠。その慎重さを「自信」に変えることで、あなたはもっと楽に動けるようになります。`,
+    long: `あなたは責任感がとても強く、「逆境で真価を発揮する、最強の守護神」です。\nどんなに厳しい状況でも、大切なものを守り抜くために踏ん張れる人. 慎重なのは、あなたがそれだけ大きな責任を背負っている証拠。鉄壁の信頼を誇ります。\n\n【アドバイス】\n不安を感じるのは、あなたが未来を予測できている証拠。その慎重さを「自信」に変えることで、あなたはもっと楽に動けるようになります。`,
     bestPartner: "ネオジム", partnerEmoji: "🧲",
     partnerReason: "相手の強力な磁力（推進力）をあなたが支えることで、巨大な成果を生む運命のペアです。",
     E: 0, A: 2, S: 3, C: 3
@@ -162,7 +162,7 @@ let elements = [
   {
     name: "ルテチウム", symbol: "Lu", emoji: "👑",
     catch: "揺らぎを安定に変える、最後の拠り所",
-    short: "精神的支柱。本物の安定感。",
+    short: "精神的支柱. 本物の安定感。",
     long: `あなたは「周囲に無言の安心感を与える、精神的支柱」です。\n自分から積極的に仕切るタイプではありませんが、あなたが「いいよ」と言えば周囲が安心し、あなたが「違う」と言えば空気が引き締まる。そんな、言葉に重みがある人です。\nレアアースの中で最も密度が高く、固く、極めて希少なルテチウムのようなあなたは、“本物の安定感”を持つ人です。\n\n【アドバイス】\nあなたが思っている以上に、周囲はあなたの顔色や一言を信頼の指標にしています。無理に動かなくても、あなたがどっしりと構えているだけで、チームや家族は正しい方向へ進むことができます。`,
     bestPartner: "イッテルビウム", partnerEmoji: "🌙",
     partnerReason: "あなたの決断に必要な「細かな気づき」を届けてくれる最高の理解者です。",
@@ -170,11 +170,9 @@ let elements = [
   }
 ];
 
-// ===== 1. 適合度計算（バランス調整版） =====
-
-// S軸の重みを1.5から1.2に微調整（1.5だとS軸が似ているだけで1位が固定されやすいため）
-const weightS = 1.2; 
-const maxDist = Math.sqrt(9 + 9 + (9 * weightS) + 9); // 約6.15
+// ===== 1. 適合度計算 =====
+const weightS = 1.2;
+const maxDist = Math.sqrt(9 + 9 + (9 * weightS) + 9);
 
 elements.forEach(el => {
   let dE = Math.pow(user.E - el.E, 2);
@@ -183,40 +181,31 @@ elements.forEach(el => {
   let dC = Math.pow(user.C - el.C, 2);
 
   let distance = Math.sqrt(dE + dA + dS + dC);
-
-  // 適合度計算（差が0なら100%）
   let rawScore = (1 - (distance / maxDist)) * 100;
-  
-  // スコアを四捨五入（100%は出さない仕様なら99で制限）
   el.score = Math.min(Math.round(rawScore), 99);
 });
 
-// ===== 2. 並び替え（「軸の重なり」を重視するタイブレーク） =====
+// ===== 2. 並び替え =====
 elements.sort((a, b) => {
   if (b.score !== a.score) return b.score - a.score;
 
-  // Yb vs Tm の差別化
   const rawAnswers = JSON.parse(localStorage.getItem("uranaiAnswers")) || {};
   if (((a.symbol === "Yb" && b.symbol === "Tm") || (a.symbol === "Tm" && b.symbol === "Yb"))) {
     if (rawAnswers.q8 === 1) return a.symbol === "Yb" ? -1 : 1;
     else return a.symbol === "Tm" ? -1 : 1;
   }
 
-  // 同点の場合、ユーザーの最大軸（一番特徴が出た軸）の数値が、元素の理想値と一致している方を優先
   const axes = ['E', 'A', 'S', 'C'];
   const userMaxAxis = axes.reduce((p, c) => (user[p] > user[c] ? p : c));
-  
-  // ユーザーが一番高くスコアを出した軸において、元素側の理想値も高い方を1位にする
   return b[userMaxAxis] - a[userMaxAxis];
 });
 
-// ===== 3. 表示生成（1位はLong、2・3位はShort） =====
+// ===== 3. 表示生成 =====
 let top3 = elements.slice(0, 3);
 let resultHTML = "";
 
 top3.forEach((el, index) => {
   if (index === 0) {
-    // 【1位：詳細カード】
     resultHTML += `
     <div class="resultCard">
       <div class="rankLabel">あなたに最も近いレアアース</div>
@@ -225,9 +214,7 @@ top3.forEach((el, index) => {
       <h3 style="display:block; width:100%;">キャッチコピー： 「${el.catch}」</h3>
       <div class="scoreDisplay">適合度: <strong>${el.score}%</strong></div>
       <img src="images/${el.symbol}.png" alt="${el.name}" class="charImage">
-      <div class="longText">
-        ${el.long.replace(/\n/g, "<br>")}
-      </div>
+      <div class="longText">${el.long.replace(/\n/g, "<br>")}</div>
       <div class="compatibilityArea">
         <h4>🤝 相性の良いパートナー</h4>
         <p><strong>${el.partnerEmoji} ${el.bestPartner}</strong></p>
@@ -237,7 +224,6 @@ top3.forEach((el, index) => {
     <div style="text-align:center; margin: 30px 0 15px; color:#888; font-size:14px; font-weight:bold;">▼ 他にあなたに近いレアアース</div>
     `;
   } else {
-    // 【2位・3位：要約リスト】
     resultHTML += `
     <div class="resultCard" style="padding: 20px; margin-bottom: 15px; border-top: 4px solid #bdc3c7;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
@@ -251,4 +237,7 @@ top3.forEach((el, index) => {
   }
 });
 
-document.getElementById("resultArea").innerHTML = resultHTML;
+const resultArea = document.getElementById("resultArea");
+if (resultArea) {
+  resultArea.innerHTML = resultHTML;
+}
