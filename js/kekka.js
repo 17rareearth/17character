@@ -58,7 +58,7 @@ let elements = [
     long: `あなたは「日常に彩りを与えるアーティスト」。\n他の人には見えない微細な「違い」に気づける人。静かだけど、美意識が高く、自分の世界を持っています。\n流行に流されず、自分の「好き」を貫く姿は、密かに周囲の憧れになっています。\n評価より“納得”が大事。あなたの色は、真似できません。\n\n【アドバイス】\n納得できないことに妥協するのは苦痛かもしれません。でも、あなたの「こだわり」を言葉にして伝えると、理解者はもっと増えるはずです。`,
     bestPartner: "ガドリニウム", partnerEmoji: "🏥",
     partnerReason: "あなたの繊細な感性を、相手の深い優しさが包み込み、安心させてくれます。",
-    E: 1, A: 2, S: 2, C: 3
+    E: 1, A: 1, S: 2, C: 3
   },
   {
     name: "ネオジム", symbol: "Nd", emoji: "🧲",
@@ -76,7 +76,7 @@ let elements = [
     long: `あなたは「静寂の中に独自の光を灯す、知の求道者」。\nどこかミステリアスで、一人の時間を愛する理論派。多弁ではありませんが、その内側には「知の炎」が静かに燃えており、誰もが諦めた難問に一筋の解決策を見出す力があります。\n数は少ないけれど、存在感は濃い、プロメチウムのようなあなたは“研究の光”です。\n\n【アドバイス】\n自分の世界を大切にするあまり、孤独を感じることもあるのでは？あなたが勇気を持って言葉を発することは、迷える周囲にとって「暗闇を切り裂く一筋の希望」になるはずです。`,
     bestPartner: "サマリウム", partnerEmoji: "🔥",
     partnerReason: "独特なあなたの世界観を、相手の忍耐強さがじっくりと理解してくれます。",
-    E: 1, A: 1, S: 1, C: 3
+    E: 0, A: 1, S: 3, C: 3
   },
   {
     name: "サマリウム", symbol: "Sm", emoji: "🔥",
@@ -85,7 +85,7 @@ let elements = [
     long: `あなたは「過酷な環境でこそ真価を出す、タフな不屈派」。\n熱くても崩れない。困難でこそ強い。あなたは持久力のある人です。\nプレッシャーがかかる場面や、他人が投げ出すような困難でも、熱を帯びるほどに粘り強さを発揮します。弱音を吐かずにやり遂げる姿は、周囲の希望です。\n\n【アドバイス】\n「自分が頑張ればいい」と抱え込みがち。熱に強いあなたでも、冷却期間は必要です。意識的に「何もしない日」を作ってみてください。`,
     bestPartner: "プロメチウム", partnerEmoji: "🔬",
     partnerReason: "困難に耐えるあなたの強さを、相手の知的な視点が「新しい価値」に変えてくれます。",
-    E: 1, A: 2, S: 3, C: 2
+    E: 1, A: 2, S: 2, C: 3
   },
   {
     name: "ユウロピウム", symbol: "Eu", emoji: "✨",
@@ -94,7 +94,7 @@ let elements = [
     long: `あなたは「周囲の視線をエネルギーに変える、生粋 of 表現者」。\n注目されるほどにパフォーマンスが上がり、あなたの明るさがチームの雰囲気を一変させます。表現すること自体があなたの生存戦略であり、華やかさは才能です。\n\n【アドバイス】\n遠慮して個性を消すと、あなたの魅力は半減します。自分らしく輝くことが、結果として周りを勇気づけるのだと信じて突き進んでください。`,
     bestPartner: "イットリウム", partnerEmoji: "🧩",
     partnerReason: "あなたの自由な表現を、相手が影で支えて形にしてくれる安心のペアです。",
-    E: 3, A: 2, S: 2, C: 1
+    E: 3, A: 2, S: 1, C: 1
   },
   {
     name: "ガドリニウム", symbol: "Gd", emoji: "🏥",
@@ -103,7 +103,7 @@ let elements = [
     long: `あなたは守る人、「他人の痛みを自分のことのように感じる、慈愛の人」です。\n目立つ場所にはいないけれど、誰かが困っているときに一番に気づき、そっと手を差し伸べます。\nあなたの優しさは、鋭い剣よりも強い守りの盾となります。\n\n【アドバイス】\n人のケアばかりで、自分自身の傷を放置していませんか？自分を助けることが、より多くの人を助けることにつながります。`,
     bestPartner: "テルビウム", partnerEmoji: "🧠",
     partnerReason: "理屈に走りすぎる相手を、あなたの共感力が人間らしく繋ぎ止めます。",
-    E: 1, A: 2, S: 3, C: 2
+    E: 1, A: 1, S: 3, C: 2
   },
   {
     name: "テルビウム", symbol: "Tb", emoji: "🧠",
@@ -112,7 +112,7 @@ let elements = [
     long: `あなたは精密さを持った、「理想を形にするための最短距離を知る、戦略家」です。\n中途半端を嫌い、細部までこだわり抜く精密さを持っています。少し頑固に見えるのは、あなたが「最高の結果」を出すための正解をすでに見ているからです。\n\n【アドバイス】\n遊びのない機械は壊れやすいもの。あえて「余白」や「遊び」を作ることで、あなたの緻密な計画はより柔軟で強固なものになります。`,
     bestPartner: "ガドリニウム", partnerEmoji: "🏥",
     partnerReason: "あなたの精密すぎる設計図に、相手が「温かみ」という命を吹き込みます。",
-    E: 2, A: 2, S: 1, C: 3
+    E: 0, A: 2, S: 2, C: 3
   },
   {
     name: "ジスプロシウム", symbol: "Dy", emoji: "🛡",
@@ -121,7 +121,7 @@ let elements = [
     long: `あなたは責任感がとても強く、「逆境で真価を発揮する、最強の守護神」です。\nどんなに厳しい状況でも、大切なものを守り抜くために踏ん張れる人。慎重なのは、あなたがそれだけ大きな責任を背負っている証拠。鉄壁の信頼を誇ります。\n\n【アドバイス】\n不安を感じるのは、あなたが未来を予測できている証拠。その慎重さを「自信」に変えることで、あなたはもっと楽に動けるようになります。`,
     bestPartner: "ネオジム", partnerEmoji: "🧲",
     partnerReason: "相手の強力な磁力（推進力）をあなたが支えることで、巨大な成果を生む運命のペアです。",
-    E: 1, A: 3, S: 3, C: 2
+    E: 0, A: 2, S: 3, C: 3
   },
   {
     name: "ホルミウム", symbol: "Ho", emoji: "🎯",
@@ -130,7 +130,7 @@ let elements = [
     long: `あなたは「一つのことに魂を注ぎ込める、爆発的スペシャリスト」。\n興味がある対象を見つけた時の没頭力は、17元素の中でもナンバーワン。周囲が驚くような熱量で専門性を磨き上げ、他の誰にも真似できない領域に到達する力があります。\nムラがあるのは、それだけ高いエネルギーを一点に凝縮している証拠。誰にも真似できない熱量を持つホルミウムのようなあなたは、“爆発力の専門家”です。\n\n【アドバイス】\n興味のないことへの無関心が弱点になることも。自分の専門性と、他人の得意分野を組み合わせる「掛け算」を意識すると、世界が広がります。`,
     bestPartner: "エルビウム", partnerEmoji: "📡",
     partnerReason: "一点に集中しすぎるあなたを、相手が広い視野（情報）でナビゲートしてくれます。",
-    E: 2, A: 2, S: 1, C: 3
+    E: 0, A: 2, S: 3, C: 2
   },
   {
     name: "エルビウム", symbol: "Er", emoji: "📡",
@@ -139,7 +139,7 @@ let elements = [
     long: `あなたは流れを作る人、「全体の流れを読み、未来を予測するナビゲーター」です。\n表で騒ぐよりも、情報の糸をたぐり寄せて全体をコントロールすることに長けています。あなたの助言一つで、組織の進むべき道が明確になります。\n\n【アドバイス】\nあなたには見えている景色も、他人には見えていないことが多いです。もっと積極的に「情報の共有」をすると、周囲はさらにあなたを頼ります。`,
     bestPartner: "ホルミウム", partnerEmoji: "🎯",
     partnerReason: "あなたが分析した「進むべき道」を、相手の圧倒的な集中力が突破してくれます。",
-    E: 1, A: 2, S: 2, C: 3
+    E: 0, A: 1, S: 2, C: 3
   },
   {
     name: "ツリウム", symbol: "Tm", emoji: "🌫",
@@ -148,7 +148,7 @@ let elements = [
     long: `あなたは必要なときに力を発揮する、「レアな安定感を持つ、隠れた実力派」です。\n目立たず騒がず、しかし求められた瞬間に完璧な仕事をこなします。その希少な存在感と、決して裏切らない安定した実力は、玄人から高く評価されています。「いざという時の決定打」のような存在です。\n\n【アドバイス】\n「自分なんて」と控えめになりすぎないで。あなたが必要とされる場面は必ず来ます。その時のために、自分の牙を磨き続けておいてください。`,
     bestPartner: "イッテルビウム", partnerEmoji: "🌙",
     partnerReason: "お互いに無理に喋らなくても通じ合える、最も心地よい関係になれます。",
-    E: 1, A: 2, S: 3, C: 3
+    E: 0, A: 1, S: 3, C: 2
   },
   {
     name: "イッテルビウム", symbol: "Yb", emoji: "🌙",
@@ -157,7 +157,7 @@ let elements = [
     long: `あなたは「微かな変化を逃さない、繊細なセンサーの持ち主」。\n周囲をよく観察しており、他人が気づかない空気の変化や本音を察知します。無理に主張はしませんが、心の中では常に状況を冷静に分析しています。\n無理に主張しない。でも内側ではフル回転している「高精度のセンサー」です。\n\n【アドバイス】\n敏感すぎて疲れてしまうことも。気づいたことをすべて自分に取り込まず、鏡のように「映して受け流す」意識を持つと、心が軽くなります。`,
     bestPartner: "ルテチウム", partnerEmoji: "👑",
     partnerReason: "あなたが気づいた微かな兆しを、相手が決断力を持って形にしてくれます。",
-    E: 1, A: 2, S: 3, C: 3
+    E: 0, A: 1, S: 3, C: 2
   },
   {
     name: "ルテチウム", symbol: "Lu", emoji: "👑",
@@ -166,45 +166,69 @@ let elements = [
     long: `あなたは「周囲に無言の安心感を与える、精神的支柱」です。\n自分から積極的に仕切るタイプではありませんが、あなたが「いいよ」と言えば周囲が安心し、あなたが「違う」と言えば空気が引き締まる。そんな、言葉に重みがある人です。\nレアアースの中で最も密度が高く、固く、極めて希少なルテチウムのようなあなたは、“本物の安定感”を持つ人です。\n\n【アドバイス】\nあなたが思っている以上に、周囲はあなたの顔色や一言を信頼の指標にしています。無理に動かなくても、あなたがどっしりと構えているだけで、チームや家族は正しい方向へ進むことができます。`,
     bestPartner: "イッテルビウム", partnerEmoji: "🌙",
     partnerReason: "あなたの決断に必要な「細かな気づき」を届けてくれる最高の理解者です。",
-    E: 2, A: 3, S: 3, C: 3
+    E: 1, A: 3, S: 2, C: 3
   }
 ];
 
-// ===== 1. スコア計算 =====
-let maxDistance = Math.sqrt(9 + 9 + 13.5 + 9);
+// ===== 1. 適合度計算（画像ロジック：S軸1.5倍） =====
+let maxDistance = Math.sqrt(9 + 9 + (9 * 1.5) + 9); // 最大距離の再定義
+
 elements.forEach(el => {
   let distance = Math.sqrt(
-    (user.E - el.E) ** 2 + (user.A - el.A) ** 2 +
-    ((user.S - el.S) ** 2) * 1.5 + (user.C - el.C) ** 2
+    Math.pow(user.E - el.E, 2) +
+    Math.pow(user.A - el.A, 2) +
+    Math.pow(user.S - el.S, 2) * 1.5 + // S軸を1.5倍重く
+    Math.pow(user.C - el.C, 2)
   );
+
   let score = (1 - distance / maxDistance) * 100;
   el.score = Math.min(Math.round(score), 99);
 });
 
-// ===== 2. 並び替え（タイブレーク：最も高い軸を優先） =====
+// ===== 2. 並び替え（Yb vs Tm の解決ロジック） =====
 elements.sort((a, b) => {
+  // まずは適合度スコアで比較
   if (b.score !== a.score) return b.score - a.score;
+
+  // --- 【解決案2】Yb と Tm が同点だった場合の処理 ---
+  const rawAnswers = JSON.parse(localStorage.getItem("uranaiAnswers")) || {};
+  const q8 = rawAnswers.q8; // 1:ちょっとうれしい, 0:あまりうれしくない
+
+  const isYbTm = (a.symbol === "Yb" && b.symbol === "Tm") || (a.symbol === "Tm" && b.symbol === "Yb");
+
+  if (isYbTm) {
+    if (q8 === 1) {
+      // 「うれしい」なら Yb(イッテルビウム) を優先
+      return a.symbol === "Yb" ? -1 : 1;
+    } else {
+      // 「あまり」なら Tm(ツリウム) を優先
+      return a.symbol === "Tm" ? -1 : 1;
+    }
+  }
+  // ----------------------------------------------
+
+  // その他の元素で同点の場合は、一番高い軸で比較
   let axes = ['E', 'A', 'S', 'C'];
   let maxAxis = axes.reduce((p, c) => (user[p] > user[c] ? p : c));
   return b[maxAxis] - a[maxAxis];
 });
 
-// ===== 3. 表示生成（1位＝Long, 2・3位＝Short） =====
+// ===== 3. 表示生成（1位はLong、2・3位はShort） =====
 let top3 = elements.slice(0, 3);
 let resultHTML = "";
 
 top3.forEach((el, index) => {
   if (index === 0) {
-    // 【1位：詳細カード（longを使用）】
+    // 【1位：詳細カード】
     resultHTML += `
     <div class="resultCard">
       <div class="rankLabel">あなたに最も近いレアアース</div>
       <h2>${el.emoji} ${el.name}（${el.symbol}）</h2>
-      <p class="shortDesc" style="font-weight:bold; color:#555; margin-bottom:10px;">${el.short}</p>
-      <h3 class="catchCopy" style="display:block; width:100%;">キャッチコピー： 「${el.catch}」</h3>
+      <p style="font-weight:bold; color:#555; margin-bottom:10px;">${el.short}</p>
+      <h3 style="display:block; width:100%;">キャッチコピー： 「${el.catch}」</h3>
       <div class="scoreDisplay">適合度: <strong>${el.score}%</strong></div>
       <img src="images/${el.symbol}.png" alt="${el.name}" class="charImage">
-      <div class="longText" style="padding: 15px 0; border-top: 1px dashed #ddd; margin-top: 15px;">
+      <div class="longText">
         ${el.long.replace(/\n/g, "<br>")}
       </div>
       <div class="compatibilityArea">
@@ -216,7 +240,7 @@ top3.forEach((el, index) => {
     <div style="text-align:center; margin: 30px 0 15px; color:#888; font-size:14px; font-weight:bold;">▼ 他にあなたに近いレアアース</div>
     `;
   } else {
-    // 【2位・3位：要約カード（shortを使用）】
+    // 【2位・3位：要約リスト】
     resultHTML += `
     <div class="resultCard" style="padding: 20px; margin-bottom: 15px; border-top: 4px solid #bdc3c7;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
@@ -230,5 +254,4 @@ top3.forEach((el, index) => {
   }
 });
 
-const resultArea = document.getElementById("resultArea");
-if (resultArea) resultArea.innerHTML = resultHTML;
+document.getElementById("resultArea").innerHTML = resultHTML;

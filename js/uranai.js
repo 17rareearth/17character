@@ -30,10 +30,11 @@ document.addEventListener("DOMContentLoaded", function() {
       C: answers.q5 + answers.q8 + answers.q10
     };
 
-    localStorage.setItem("uranaiScore", JSON.stringify(user));
+// 【重要】これら2つを両方保存してください
+    localStorage.setItem("uranaiScore", JSON.stringify(user));    // 各軸の合計点
+    localStorage.setItem("uranaiAnswers", JSON.stringify(answers)); // 質問ごとの生回答
 
     // 結果ページへ
     window.location.href = "uranai_kekka.html";
-  });
 
 });
