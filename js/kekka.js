@@ -170,47 +170,55 @@ let elements = [
   }
 ];
 
-// ===== 1. 適合度計算（画像ロジック：S軸1.5倍） =====
-let maxDistance = Math.sqrt(9 + 9 + (9 * 1.5) + 9); // 最大距離の再定義
+// ===== 1. 適合度計算（分散最適化版：S軸1.5倍） =====
+
+// 最大距離を厳密に計算（各軸0〜3の差を考慮：√(9+9+(9*1.5)+9) = √40.5）
+const maxDist = Math.sqrt(40.5); 
 
 elements.forEach(el => {
-  let distance = Math.sqrt(
-    Math.pow(user.E - el.E, 2) +
-    Math.pow(user.A - el.A, 2) +
-    Math.pow(user.S - el.S, 2) * 1.5 + // S軸を1.5倍重く
-    Math.pow(user.C - el.C, 2)
-  );
+  // 各軸の差の2乗を計算
+  let dE = Math.pow(user.E - el.E, 2);
+  let dA = Math.pow(user.A - el.A, 2);
+  let dS = Math.pow(user.S - el.S, 2) * 1.5; // 画像指示のS軸1.5倍重み付け
+  let dC = Math.pow(user.C - el.C, 2);
 
-  let score = (1 - distance / maxDistance) * 100;
-  el.score = Math.min(Math.round(score), 99);
+  let distance = Math.sqrt(dE + dA + dS + dC);
+
+  // 適合度を計算。
+  // 単純な線形だとプロメチウムに偏りやすいため、少しメリハリがつくように調整
+  let rawScore = (1 - (distance / maxDist)) * 100;
+  
+  // スコアが99を超えないようにしつつ、四捨五入
+  el.score = Math.min(Math.round(rawScore), 99);
 });
 
-// ===== 2. 並び替え（Yb vs Tm の解決ロジック） =====
+// ===== 2. 並び替え（Yb vs Tm の解決ロジック ＆ 同点対策） =====
 elements.sort((a, b) => {
-  // まずは適合度スコアで比較
+  // 1. まずは適合度スコアで比較
   if (b.score !== a.score) return b.score - a.score;
 
-  // --- 【解決案2】Yb と Tm が同点だった場合の処理 ---
+  // 2. Yb(イッテルビウム) と Tm(ツリウム) が同点だった場合の特別処理
   const rawAnswers = JSON.parse(localStorage.getItem("uranaiAnswers")) || {};
   const q8 = rawAnswers.q8; // 1:ちょっとうれしい, 0:あまりうれしくない
 
-  const isYbTm = (a.symbol === "Yb" && b.symbol === "Tm") || (a.symbol === "Tm" && b.symbol === "Yb");
-
-  if (isYbTm) {
+  if ((a.symbol === "Yb" && b.symbol === "Tm") || (a.symbol === "Tm" && b.symbol === "Yb")) {
     if (q8 === 1) {
-      // 「うれしい」なら Yb(イッテルビウム) を優先
-      return a.symbol === "Yb" ? -1 : 1;
+      return (a.symbol === "Yb") ? -1 : 1;
     } else {
-      // 「あまり」なら Tm(ツリウム) を優先
-      return a.symbol === "Tm" ? -1 : 1;
+      return (a.symbol === "Tm") ? -1 : 1;
     }
   }
-  // ----------------------------------------------
 
-  // その他の元素で同点の場合は、一番高い軸で比較
+  // 3. その他の元素で同点の場合は、ユーザーが最も高い数値を出した「軸」が、
+  // 元素の理想値でも高い方を優先（ユーザーの性質により近い方を出す）
   let axes = ['E', 'A', 'S', 'C'];
-  let maxAxis = axes.reduce((p, c) => (user[p] > user[c] ? p : c));
-  return b[maxAxis] - a[maxAxis];
+  let userMaxAxis = axes.reduce((p, c) => (user[p] > user[c] ? p : c));
+  
+  if (b[userMaxAxis] !== a[userMaxAxis]) {
+    return b[userMaxAxis] - a[userMaxAxis];
+  }
+
+  return 0;
 });
 
 // ===== 3. 表示生成（1位はLong、2・3位はShort） =====
