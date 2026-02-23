@@ -76,7 +76,7 @@ let elements = [
     long: `あなたは「静寂の中に独自の光を灯す、知の求道者」。\nどこかミステリアスで、一人の時間を愛する理論派。多弁ではありませんが、その内側には「知の炎」が静かに燃えており、誰もが諦めた難問に一筋の解決策を見出す力があります。\n数は少ないけれど、存在感は濃い、プロメチウムのようなあなたは“研究の光”です。\n\n【アドバイス】\n自分の世界を大切にするあまり、孤独を感じることもあるのでは？あなたが勇気を持って言葉を発することは、迷える周囲にとって「暗闇を切り裂く一筋の希望」になるはずです。`,
     bestPartner: "サマリウム", partnerEmoji: "🔥",
     partnerReason: "独特なあなたの世界観を、相手の忍耐強さがじっくりと理解してくれます。",
-    E: 0, A: 1, S: 3, C: 3
+    E: 0, A: 1, S: 3, C: 2
   },
   {
     name: "サマリウム", symbol: "Sm", emoji: "🔥",
@@ -170,55 +170,44 @@ let elements = [
   }
 ];
 
-// ===== 1. 適合度計算（分散最適化版：S軸1.5倍） =====
+// ===== 1. 適合度計算（バランス調整版） =====
 
-// 最大距離を厳密に計算（各軸0〜3の差を考慮：√(9+9+(9*1.5)+9) = √40.5）
-const maxDist = Math.sqrt(40.5); 
+// S軸の重みを1.5から1.2に微調整（1.5だとS軸が似ているだけで1位が固定されやすいため）
+const weightS = 1.2; 
+const maxDist = Math.sqrt(9 + 9 + (9 * weightS) + 9); // 約6.15
 
 elements.forEach(el => {
-  // 各軸の差の2乗を計算
   let dE = Math.pow(user.E - el.E, 2);
   let dA = Math.pow(user.A - el.A, 2);
-  let dS = Math.pow(user.S - el.S, 2) * 1.5; // 画像指示のS軸1.5倍重み付け
+  let dS = Math.pow(user.S - el.S, 2) * weightS;
   let dC = Math.pow(user.C - el.C, 2);
 
   let distance = Math.sqrt(dE + dA + dS + dC);
 
-  // 適合度を計算。
-  // 単純な線形だとプロメチウムに偏りやすいため、少しメリハリがつくように調整
+  // 適合度計算（差が0なら100%）
   let rawScore = (1 - (distance / maxDist)) * 100;
   
-  // スコアが99を超えないようにしつつ、四捨五入
+  // スコアを四捨五入（100%は出さない仕様なら99で制限）
   el.score = Math.min(Math.round(rawScore), 99);
 });
 
-// ===== 2. 並び替え（Yb vs Tm の解決ロジック ＆ 同点対策） =====
+// ===== 2. 並び替え（「軸の重なり」を重視するタイブレーク） =====
 elements.sort((a, b) => {
-  // 1. まずは適合度スコアで比較
   if (b.score !== a.score) return b.score - a.score;
 
-  // 2. Yb(イッテルビウム) と Tm(ツリウム) が同点だった場合の特別処理
+  // Yb vs Tm の差別化
   const rawAnswers = JSON.parse(localStorage.getItem("uranaiAnswers")) || {};
-  const q8 = rawAnswers.q8; // 1:ちょっとうれしい, 0:あまりうれしくない
-
-  if ((a.symbol === "Yb" && b.symbol === "Tm") || (a.symbol === "Tm" && b.symbol === "Yb")) {
-    if (q8 === 1) {
-      return (a.symbol === "Yb") ? -1 : 1;
-    } else {
-      return (a.symbol === "Tm") ? -1 : 1;
-    }
+  if (((a.symbol === "Yb" && b.symbol === "Tm") || (a.symbol === "Tm" && b.symbol === "Yb"))) {
+    if (rawAnswers.q8 === 1) return a.symbol === "Yb" ? -1 : 1;
+    else return a.symbol === "Tm" ? -1 : 1;
   }
 
-  // 3. その他の元素で同点の場合は、ユーザーが最も高い数値を出した「軸」が、
-  // 元素の理想値でも高い方を優先（ユーザーの性質により近い方を出す）
-  let axes = ['E', 'A', 'S', 'C'];
-  let userMaxAxis = axes.reduce((p, c) => (user[p] > user[c] ? p : c));
+  // 同点の場合、ユーザーの最大軸（一番特徴が出た軸）の数値が、元素の理想値と一致している方を優先
+  const axes = ['E', 'A', 'S', 'C'];
+  const userMaxAxis = axes.reduce((p, c) => (user[p] > user[c] ? p : c));
   
-  if (b[userMaxAxis] !== a[userMaxAxis]) {
-    return b[userMaxAxis] - a[userMaxAxis];
-  }
-
-  return 0;
+  // ユーザーが一番高くスコアを出した軸において、元素側の理想値も高い方を1位にする
+  return b[userMaxAxis] - a[userMaxAxis];
 });
 
 // ===== 3. 表示生成（1位はLong、2・3位はShort） =====
