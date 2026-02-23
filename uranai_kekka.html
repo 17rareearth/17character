@@ -7,65 +7,71 @@
 
 <style>
 body{
-  font-family:"Hiragino Kaku Gothic ProN", sans-serif;
+  font-family:"Hiragino Kaku Gothic ProN",sans-serif;
   background:#f4f6fb;
-  text-align:center;
-  padding:40px;
-}
-
-.resultBox{
-  background:white;
-  padding:30px;
-  border-radius:16px;
-  box-shadow:0 6px 18px rgba(0,0,0,0.08);
-  max-width:500px;
-  margin:0 auto;
+  padding:20px;
+  line-height:1.9;
 }
 
 h1{
-  font-size:26px;
-  margin-bottom:10px;
+  text-align:center;
+}
+
+.result-main{
+  text-align:center;
+  margin-bottom:40px;
 }
 
 .percent{
-  font-size:22px;
-  color:#5b7cfa;
-  margin-bottom:20px;
+  font-size:28px;
+  font-weight:bold;
+  margin:10px 0;
 }
 
-.sub{
-  margin-top:25px;
-  font-size:14px;
-  color:#666;
+.detail{
+  background:white;
+  padding:25px;
+  border-radius:16px;
+  margin-bottom:40px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.06);
 }
 
-button{
-  margin-top:30px;
-  padding:10px 20px;
-  border:none;
-  border-radius:10px;
-  background:#5b7cfa;
-  color:white;
-  cursor:pointer;
+.detail img{
+  width:180px;
+  display:block;
+  margin:15px auto;
+}
+
+.detail h2{
+  margin-bottom:15px;
 }
 </style>
-</head>
 
+</head>
 <body>
 
-<div class="resultBox">
-  <h1 id="mainName"></h1>
-  <div class="percent" id="mainPercent"></div>
-  <p id="mainText"></p>
-  <p class="sub" id="subType"></p>
-  <p class="sub" id="hiddenType"></p>
+<h1>🔮 あなたのレアアース結果</h1>
 
-  <button onclick="location.href='index_uranai.html'">
-    もう一度診断する
-  </button>
+<div class="result-main">
+  <h2 id="mainName"></h2>
+  <div class="percent" id="mainPercent"></div>
+  <p id="mainShort"></p>
 </div>
 
-<script src="js/kekka.js"></script>
+<div id="detail1" class="detail"></div>
+<div id="detail2" class="detail"></div>
+<div id="detail3" class="detail"></div>
+
+<script src="js/uranai_kekka.js"></script>
+
+<h2 id="mainName"></h2>
+<p id="mainCatch"></p>
+<p id="mainDesc"></p>
+<p id="mainAdvice"></p>
+<img id="mainImage" src="" alt="">
+
+<div id="secondResult"></div>
+<div id="thirdResult"></div>
 
 </body>
 </html>
