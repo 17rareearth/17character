@@ -201,16 +201,20 @@ window.onload = function() {
       }
     ];
 
-// 3. 軸計算（S軸1.2倍）
-  const weightS = 1.2;
-  const maxDist = Math.sqrt(9 + 9 + (9 * weightS) + 9);
+// 3. 軸計算（個性を尖らせる新アルゴリズム）
+  const weightS = 1.5; // S軸を強調
   elements.forEach(el => {
-    let dE = Math.pow(user.E - el.E, 2);
-    let dA = Math.pow(user.A - el.A, 2);
-    let dS = Math.pow(user.S - el.S, 2) * weightS;
-    let dC = Math.pow(user.C - el.C, 2);
-    let distance = Math.sqrt(dE + dA + dS + dC);
-    el.score = Math.min(Math.round((1 - (distance / maxDist)) * 100), 99);
+    // 差を3乗（S軸は2.5乗）することで、平均的な人より「一部がそっくりな人」を優遇
+    let dE = Math.pow(Math.abs(user.E - el.E), 3);
+    let dA = Math.pow(Math.abs(user.A - el.A), 3);
+    let dS = Math.pow(Math.abs(user.S - el.S), 2.5) * weightS;
+    let dC = Math.pow(Math.abs(user.C - el.C), 3);
+    
+    let totalDiff = dE + dA + dS + dC;
+    
+    // ％計算：差が大きくなりすぎるのを防ぎつつ、40〜90%くらいに収める魔法の式
+    let rawScore = 95 - (totalDiff * 0.8); 
+    el.score = Math.max(10, Math.round(rawScore));
   });
 
   // 4. 並び替え
