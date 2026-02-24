@@ -1,21 +1,19 @@
 // ===============================
-// 🔮 レアアース診断 【詳細文章・完全復元版】
+// 🔮 レアアース診断 結果表示 (js/kekka.js)
 // ===============================
 
-(function() {
-  window.onload = function() {
-    
-    // 1. データ取得
-    const scoreData = localStorage.getItem("uranaiScore");
-    if (!scoreData) {
-      document.getElementById("resultArea").innerHTML = "<h2>データが見つかりません。TOPからやり直してください。</h2>";
-      return;
-    }
-    const user = JSON.parse(scoreData);
+window.onload = function() {
+  // 1. データ取得
+  const scoreData = localStorage.getItem("uranaiScore");
+  if (!scoreData) {
+    document.getElementById("resultArea").innerHTML = "<h2>データが見つかりません。TOPからやり直してください。</h2>";
+    return;
+  }
+  const user = JSON.parse(scoreData);
 
-    // 2. 17元素データ（画像からいただいた詳細文章を全てここに格納しています）
-    const elements = [
-      {
+  // 2. 17元素データ（1位詳細・2/3位簡易用）
+  const elements = [
+    {
         name: "スカンジウム", symbol: "Sc", emoji: "🧲",
         catch: "可能性を底上げする、希代 of 補強材",
         short: "信頼で強くする人。土台を支える安定型。",
@@ -170,55 +168,53 @@
       }
     ];
 
-// ===== 軸計算（S軸1.2倍） =====
-    const weightS = 1.2;
-    const maxDist = Math.sqrt(9 + 9 + (9 * weightS) + 9);
-    elements.forEach(el => {
-      let dE = Math.pow(user.E - el.E, 2);
-      let dA = Math.pow(user.A - el.A, 2);
-      let dS = Math.pow(user.S - el.S, 2) * weightS;
-      let dC = Math.pow(user.C - el.C, 2);
-      let distance = Math.sqrt(dE + dA + dS + dC);
-      el.score = Math.min(Math.round((1 - (distance / maxDist)) * 100), 99);
-    });
+// 3. 軸計算（S軸1.2倍）
+  const weightS = 1.2;
+  const maxDist = Math.sqrt(9 + 9 + (9 * weightS) + 9);
+  elements.forEach(el => {
+    let dE = Math.pow(user.E - el.E, 2);
+    let dA = Math.pow(user.A - el.A, 2);
+    let dS = Math.pow(user.S - el.S, 2) * weightS;
+    let dC = Math.pow(user.C - el.C, 2);
+    let distance = Math.sqrt(dE + dA + dS + dC);
+    el.score = Math.min(Math.round((1 - (distance / maxDist)) * 100), 99);
+  });
 
-    elements.sort((a, b) => b.score - a.score);
+  // 4. 並び替え
+  elements.sort((a, b) => b.score - a.score);
 
-    // ===== 表示生成（1位＝ロング、2・3位＝ショート） =====
-    const top1 = elements[0];
-    const top2 = elements[1];
-    const top3 = elements[2];
+  // 5. 表示生成
+  const top1 = elements[0];
+  const top2 = elements[1];
+  const top3 = elements[2];
 
-    let html = `
-      <div class="resultCard">
-        <div class="rankLabel">あなたに最も近いレアアース</div>
-        <h2>${top1.emoji} ${top1.name}（${top1.symbol}）</h2>
-        <p style="font-weight:bold; color:#555;">${top1.short}</p>
-        <h3>「${top1.catch}」</h3>
-        <div class="scoreDisplay">適合度: <strong>${top1.score}%</strong></div>
-        <img src="images/${top1.symbol}.png" class="charImage">
-        <div class="longText">${top1.long.replace(/\n/g, "<br>")}</div>
-        <div class="compatibilityArea">
-          <h4>🤝 相性の良いパートナー</h4>
-          <p><strong>${top1.partnerEmoji} ${top1.bestPartner}</strong></p>
-          <p>${top1.partnerReason}</p>
-        </div>
+  let html = `
+    <div class="resultCard">
+      <div class="rankLabel">あなたに最も近いレアアース</div>
+      <h2>${top1.emoji} ${top1.name}（${top1.symbol}）</h2>
+      <p style="font-weight:bold; color:#555;">${top1.short}</p>
+      <h3>「${top1.catch}」</h3>
+      <div class="scoreDisplay">適合度: <strong>${top1.score}%</strong></div>
+      <img src="images/${top1.symbol}.png" class="charImage">
+      <div class="longText">${top1.long.replace(/\n/g, "<br>")}</div>
+      <div class="compatibilityArea">
+        <h4>🤝 相性の良いパートナー</h4>
+        <p><strong>${top1.partnerEmoji} ${top1.bestPartner}</strong></p>
+        <p>${top1.partnerReason}</p>
       </div>
+    </div>
+    <div style="text-align:center; margin: 20px 0; color:#888;">▼ 他にあなたに近いレアアース</div>
+    <div class="resultCard" style="padding:15px; border-top:4px solid #bdc3c7;">
+      <div style="font-size:12px;">第2位 ${top2.score}%</div>
+      <h4>${top2.emoji} ${top2.name}</h4>
+      <p style="font-size:14px;">${top2.short}</p>
+    </div>
+    <div class="resultCard" style="padding:15px; border-top:4px solid #bdc3c7;">
+      <div style="font-size:12px;">第3位 ${top3.score}%</div>
+      <h4>${top3.emoji} ${top3.name}</h4>
+      <p style="font-size:14px;">${top3.short}</p>
+    </div>
+  `;
 
-      <div style="text-align:center; margin: 20px 0; color:#888;">▼ 他にあなたに近いレアアース</div>
-
-      <div class="resultCard" style="padding:15px; border-top:4px solid #bdc3c7;">
-        <div style="font-size:12px;">第2位 ${top2.score}%</div>
-        <h4>${top2.emoji} ${top2.name}</h4>
-        <p style="font-size:14px;">${top2.short}</p>
-      </div>
-      <div class="resultCard" style="padding:15px; border-top:4px solid #bdc3c7;">
-        <div style="font-size:12px;">第3位 ${top3.score}%</div>
-        <h4>${top3.emoji} ${top3.name}</h4>
-        <p style="font-size:14px;">${top3.short}</p>
-      </div>
-    `;
-
-    document.getElementById("resultArea").innerHTML = html;
-  };
-})();
+  document.getElementById("resultArea").innerHTML = html;
+};
