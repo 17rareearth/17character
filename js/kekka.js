@@ -170,7 +170,7 @@
       }
     ];
 
-    // 3. 計算
+// ===== 軸計算（S軸1.2倍） =====
     const weightS = 1.2;
     const maxDist = Math.sqrt(9 + 9 + (9 * weightS) + 9);
     elements.forEach(el => {
@@ -182,53 +182,43 @@
       el.score = Math.min(Math.round((1 - (distance / maxDist)) * 100), 99);
     });
 
-    // 4. 並び替え
     elements.sort((a, b) => b.score - a.score);
 
-    // 5. 表示生成（絶対に1位をロング版、2・3位をショート版にする）
+    // ===== 表示生成（1位＝ロング、2・3位＝ショート） =====
     const top1 = elements[0];
-    const second = elements[1];
-    const third = elements[2];
+    const top2 = elements[1];
+    const top3 = elements[2];
 
-    let resultHTML = `
+    let html = `
       <div class="resultCard">
         <div class="rankLabel">あなたに最も近いレアアース</div>
         <h2>${top1.emoji} ${top1.name}（${top1.symbol}）</h2>
-        <p style="font-weight:bold; color:#555; margin-bottom:10px;">${top1.short}</p>
-        <h3 style="display:block; width:100%;">キャッチコピー： 「${top1.catch}」</h3>
+        <p style="font-weight:bold; color:#555;">${top1.short}</p>
+        <h3>「${top1.catch}」</h3>
         <div class="scoreDisplay">適合度: <strong>${top1.score}%</strong></div>
-        <img src="images/${top1.symbol}.png" alt="${top1.name}" class="charImage">
-        <div class="longText">
-          ${top1.long.replace(/\n/g, "<br>")}
-        </div>
+        <img src="images/${top1.symbol}.png" class="charImage">
+        <div class="longText">${top1.long.replace(/\n/g, "<br>")}</div>
         <div class="compatibilityArea">
           <h4>🤝 相性の良いパートナー</h4>
           <p><strong>${top1.partnerEmoji} ${top1.bestPartner}</strong></p>
-          <p class="partnerReason">${top1.partnerReason}</p>
+          <p>${top1.partnerReason}</p>
         </div>
       </div>
 
-      <div style="text-align:center; margin: 30px 0 15px; color:#888; font-size:14px; font-weight:bold;">▼ 他にあなたに近いレアアース</div>
+      <div style="text-align:center; margin: 20px 0; color:#888;">▼ 他にあなたに近いレアアース</div>
 
-      <div class="resultCard" style="padding: 20px; margin-bottom: 15px; border-top: 4px solid #bdc3c7;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <div style="font-size: 13px; color:#777; font-weight:bold;">第 2 位</div>
-          <div style="color:#e74c3c; font-weight:bold; font-size: 18px;">${second.score}%</div>
-        </div>
-        <h4 style="margin: 0 0 10px 0; font-size: 19px;">${second.emoji} ${second.name}</h4>
-        <p style="margin: 0; font-size: 14px; color: #555; line-height: 1.5;">${second.short}</p>
+      <div class="resultCard" style="padding:15px; border-top:4px solid #bdc3c7;">
+        <div style="font-size:12px;">第2位 ${top2.score}%</div>
+        <h4>${top2.emoji} ${top2.name}</h4>
+        <p style="font-size:14px;">${top2.short}</p>
       </div>
-
-      <div class="resultCard" style="padding: 20px; margin-bottom: 15px; border-top: 4px solid #bdc3c7;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <div style="font-size: 13px; color:#777; font-weight:bold;">第 3 位</div>
-          <div style="color:#e74c3c; font-weight:bold; font-size: 18px;">${third.score}%</div>
-        </div>
-        <h4 style="margin: 0 0 10px 0; font-size: 19px;">${third.emoji} ${third.name}</h4>
-        <p style="margin: 0; font-size: 14px; color: #555; line-height: 1.5;">${third.short}</p>
+      <div class="resultCard" style="padding:15px; border-top:4px solid #bdc3c7;">
+        <div style="font-size:12px;">第3位 ${top3.score}%</div>
+        <h4>${top3.emoji} ${top3.name}</h4>
+        <p style="font-size:14px;">${top3.short}</p>
       </div>
     `;
 
-    document.getElementById("resultArea").innerHTML = resultHTML;
+    document.getElementById("resultArea").innerHTML = html;
   };
 })();
