@@ -215,6 +215,9 @@ window.onload = function() {
 
   // 4. 並び替え
   elements.sort((a, b) => b.score - a.score);
+  elements[0].score = Math.min(98, elements[0].score + 10);
+  elements[1].score = Math.max(5, elements[1].score - 5);
+  elements[2].score = Math.max(5, elements[2].score - 8);
 
   // 5. 表示生成
   const top1 = elements[0];
