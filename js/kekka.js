@@ -201,19 +201,19 @@ window.onload = function() {
       }
     ];
 
-// 3. 軸計算（セリウム地獄脱出・超敏感アルゴリズム）
-  const weightS = 1.8; // S軸（こだわり）の重みをさらにアップ
+// 3. 軸計算（セリウム吸着防止・超絶敏感アルゴリズム）
+  const weightS = 2.0; // S軸（こだわり）をさらに重視
   elements.forEach(el => {
-    // 差を「4乗」にすることで、平均的なキャラ（セリウム）が有利になるのを防ぎます
-    let dE = Math.pow(Math.abs(user.E - el.E), 4);
-    let dA = Math.pow(Math.abs(user.A - el.A), 4);
-    let dS = Math.pow(Math.abs(user.S - el.S), 3.5) * weightS;
-    let dC = Math.pow(Math.abs(user.C - el.C), 4);
+    // 差を「5乗」にパワーアップ。平均に近いキャラを突き放し、一点豪華主義なキャラを浮上させます
+    let dE = Math.pow(Math.abs(user.E - el.E), 5);
+    let dA = Math.pow(Math.abs(user.A - el.A), 5);
+    let dS = Math.pow(Math.abs(user.S - el.S), 4) * weightS;
+    let dC = Math.pow(Math.abs(user.C - el.C), 5);
     
     let totalDiff = dE + dA + dS + dC;
     
-    // スコア計算：個性が強いほど高い数字が出るように調整
-    let rawScore = 98 - (totalDiff * 0.5); 
+    // スコア計算：ベースを99にし、差があるほどガクンと落とす
+    let rawScore = 99 - (totalDiff * 0.4); 
     el.score = Math.max(5, Math.round(rawScore));
   });
 
