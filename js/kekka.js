@@ -216,6 +216,7 @@ window.onload = function() {
       <div class="longText">${top1.long.replace(/\n/g, "<br>")}</div>
       <div class="compatibilityArea">
         <h4>🤝 相性の良いパートナー</h4>
+        <img src="${top1.partnerImage}" style="width: 100px;">
         <p><strong>${top1.partnerEmoji} ${top1.bestPartner}</strong></p>
         <p>${top1.partnerReason}</p>
       </div>
@@ -225,11 +226,13 @@ window.onload = function() {
       <div style="font-size:12px;">第2位 ${top2.score}%</div>
       <h4>${top2.emoji} ${top2.name}</h4>
       <p style="font-size:14px;">${top2.short}</p>
+      <img src="${top2.image}" class="charImage">
     </div>
     <div class="resultCard" style="padding:15px; border-top:4px solid #bdc3c7;">
       <div style="font-size:12px;">第3位 ${top3.score}%</div>
       <h4>${top3.emoji} ${top3.name}</h4>
       <p style="font-size:14px;">${top3.short}</p>
+      <img src="${top3.image}" class="charImage">
     </div>
   `;
 
