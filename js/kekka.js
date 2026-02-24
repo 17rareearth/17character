@@ -201,20 +201,29 @@ window.onload = function() {
       }
     ];
 
-// 3. 軸計算（セリウム吸着防止・超絶敏感アルゴリズム）
-  const weightS = 2.0; // S軸（こだわり）をさらに重視
+// 3. 軸計算（新・マッチングアルゴリズム）
   elements.forEach(el => {
-    // 差を「5乗」にパワーアップ。平均に近いキャラを突き放し、一点豪華主義なキャラを浮上させます
-    let dE = Math.pow(Math.abs(user.E - el.E), 5);
-    let dA = Math.pow(Math.abs(user.A - el.A), 5);
-    let dS = Math.pow(Math.abs(user.S - el.S), 4) * weightS;
-    let dC = Math.pow(Math.abs(user.C - el.C), 5);
+    let matchScore = 0;
     
-    let totalDiff = dE + dA + dS + dC;
-    
-    // スコア計算：ベースを99にし、差があるほどガクンと落とす
-    let rawScore = 99 - (totalDiff * 0.4); 
-    el.score = Math.max(5, Math.round(rawScore));
+    // 各軸、数値が近いほど加点する方式に変更（0〜3点のスケール）
+    // 差が0なら+25点、差が0.5なら+15点、差が1なら+5点、それ以上は0点
+    [
+      {u: user.E, e: el.E, weight: 1.0},
+      {u: user.A, e: el.A, weight: 1.0},
+      {u: user.S, e: el.S, weight: 2.0}, // S軸（こだわり）は配点を2倍に
+      {u: user.C, e: el.C, weight: 1.0}
+    ].forEach(axis => {
+      let diff = Math.abs(axis.u - axis.e);
+      let point = 0;
+      if (diff < 0.34) point = 25;      // ほぼ一致
+      else if (diff < 0.67) point = 15; // かなり近い
+      else if (diff < 1.1) point = 5;   // まあまあ近い
+      
+      matchScore += point * axis.weight;
+    });
+
+    // 満点を100点満点に換算（重み合計5.0 * 25点 = 125点満点なので調整）
+    el.score = Math.min(Math.round((matchScore / 125) * 100), 98);
   });
 
   // 4. 並び替え
