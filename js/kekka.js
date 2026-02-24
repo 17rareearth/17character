@@ -198,7 +198,7 @@ window.onload = function() {
       <p style="font-weight:bold; color:#555;">${top1.short}</p>
       <h3>「${top1.catch}」</h3>
       <div class="scoreDisplay">適合度: <strong>${top1.score}%</strong></div>
-      <img src="images/${top1.symbol}.png" class="charImage">
+      <img src="images/${top1.image}" class="charImage">
       <div class="longText">${top1.long.replace(/\n/g, "<br>")}</div>
       <div class="compatibilityArea">
         <h4>🤝 相性の良いパートナー</h4>
