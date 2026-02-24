@@ -214,7 +214,7 @@ window.onload = function() {
   });
 
   // 4. 並び替え
-  elements.sort((a, b) => b.score - a.score);）
+  elements.sort((a, b) => b.score - a.score);
   elements[0].score = Math.min(98, elements[0].score + 15);
   elements[1].score = Math.max(5, elements[1].score - 5);
   elements[2].score = Math.max(5, elements[2].score - 10);
