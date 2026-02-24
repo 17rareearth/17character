@@ -2,8 +2,10 @@
 // 🔮 診断ページ用処理 (js/uranai.js)
 // ===============================
 
-// HTMLのボタンから呼び出されるメイン関数
+// HTMLの「診断する」ボタンから直接呼び出される関数
 function startUranai() {
+  console.log("診断を開始します..."); // 動作確認用
+
   let answers = {};
 
   // 1. 全12問の回答を取得
@@ -24,10 +26,10 @@ function startUranai() {
     C: answers.q5 + answers.q8 + answers.q10
   };
 
-  // 3. データを保存
+  // 3. データをブラウザに保存
   localStorage.setItem("uranaiScore", JSON.stringify(user));
   localStorage.setItem("uranaiAnswers", JSON.stringify(answers));
 
-  // 4. 結果ページへ強制移動
+  // 4. 結果ページへ移動
   window.location.href = "uranai_kekka.html";
 }
