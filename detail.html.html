@@ -33,22 +33,33 @@
 <script src="kekka.js"></script>
 
 <script>
-    // 1. URLから「?id=sc」の部分を読み取る魔法の呪文
+    // 1. URLから「id=sc」を取得
     const params = new URLSearchParams(window.location.search);
-    const elementId = params.get('id'); // 'sc' などが取れる
+    const elementId = params.get('id'); 
 
-    // 2. kekka.jsの中にあるデータから、一致するものを探す
-    // ※resultsオブジェクトのキーが大文字(Sc)の場合はtoUpperCase()を使う
-    const targetData = results[elementId.toUpperCase()] || results[Object.keys(results)[0]];
+    // 2. kekka.jsの「results」からデータを探す
+    // elementIdが空でないか確認し、大文字に変換して探す
+    if (elementId && typeof results !== 'undefined') {
+        const key = elementId.toUpperCase(); // 'sc' -> 'SC' に変換
+        const targetData = results[key];
 
-    // 3. 画面の各パーツを書き換える
-    if (targetData) {
-        document.title = `${targetData.name} | レアアース図鑑`;
-        document.getElementById('char-name').innerText = targetData.name;
-        document.getElementById('char-symbol').innerText = `元素記号: ${targetData.symbol}`;
-        document.getElementById('char-desc').innerText = targetData.description;
-        document.getElementById('char-img').src = `img/${targetData.symbol.toLowerCase()}.png`;
-        document.getElementById('char-img').alt = targetData.name;
+        // 3. 画面を書き換える
+        if (targetData) {
+            document.title = `${targetData.name} | レアアース図鑑`;
+            document.getElementById('char-name').innerText = targetData.name;
+            document.getElementById('char-symbol').innerText = `元素記号: ${targetData.symbol}`;
+            document.getElementById('char-desc').innerText = targetData.description;
+            
+            // 画像パスの調整（img/フォルダ内のファイル名に合わせる）
+            // 例: sc.png または scandium.png など
+            document.getElementById('char-img').src = `img/${targetData.symbol.toLowerCase()}.png`;
+            document.getElementById('char-img').alt = targetData.name;
+        } else {
+            // データが見つからない場合
+            document.getElementById('char-name').innerText = "データが見つかりませんでした";
+        }
+    } else {
+        document.getElementById('char-name').innerText = "エラー：データが読み込めません";
     }
 </script>
 
