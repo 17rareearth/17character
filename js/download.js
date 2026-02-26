@@ -1,39 +1,50 @@
 // 「画像で保存」ボタンの処理
 document.getElementById('save-image').addEventListener('click', function() {
-    // 1. 保存する範囲を「resultCard」に絞る（これで説明文をカットし、1画面サイズにします）
+    // 1. 保存対象を取得
     const target = document.querySelector('.resultCard'); 
 
-    // 2. 結果が表示されているかチェック
-    const resultArea = document.getElementById('resultArea');
-    if (!target || !resultArea || resultArea.innerHTML.trim() === "") {
+    if (!target) {
         alert("診断を完了させてから保存してください。");
         return;
     }
 
+    // 2. 【重要】保存したくない要素（長い説明や相性）を一時的に非表示にする
+    const longText = target.querySelector('.longText');
+    const compatibility = target.querySelector('.compatibilityArea');
+    
+    if (longText) longText.style.display = 'none';
+    if (compatibility) compatibility.style.display = 'none';
+
     // 3. html2canvasを実行
     html2canvas(target, {
-        backgroundColor: "#ffffff", // カード単体なので背景は白がおすすめ
-        scale: 2,                   // 高画質化
-        useCORS: true               // キャラ画像表示対策
+        backgroundColor: "#ffffff", 
+        scale: 2,
+        useCORS: true 
     }).then(canvas => {
         const image = canvas.toDataURL("image/png");
         const link = document.createElement('a');
         link.href = image;
         link.download = '17Elements_鑑定書.png';
         link.click();
+
+        // 4. 保存が終わったら画面上の表示を元に戻す
+        if (longText) longText.style.display = 'block';
+        if (compatibility) compatibility.style.display = 'block';
+        
     }).catch(err => {
         console.error("保存失敗:", err);
         alert("画像の保存に失敗しました。");
+        // エラー時も表示を元に戻す
+        if (longText) longText.style.display = 'block';
+        if (compatibility) compatibility.style.display = 'block';
     });
 });
 
 // 「結果をコピー」ボタンの処理
 document.getElementById('copy-result').addEventListener('click', function() {
-    // 画面上の <h2> タグからキャラクター名を取得
     const h2Element = document.querySelector('#resultArea h2');
     const characterName = h2Element ? h2Element.innerText : "レアアース";
 
-    // 文章を組み立て（` ` バッククォートを使用）
     const text = `私の元素は【${characterName}】でした！\n#元素診断 #レアアース性格診断\nhttps://17rareearth.github.io/17character/index_uranai.html`;
     
     if (navigator.clipboard) {
@@ -41,6 +52,6 @@ document.getElementById('copy-result').addEventListener('click', function() {
             alert(`【${characterName}】の結果をコピーしました！SNSに貼り付けてね。`);
         });
     } else {
-        alert("お使いのブラウザではコピー機能がサポートされていません。");
+        alert("コピー機能がサポートされていません。");
     }
 });
