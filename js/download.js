@@ -1,23 +1,21 @@
 // 「画像で保存」ボタンの処理
 document.getElementById('save-image').addEventListener('click', function() {
-    // 1. 保存対象を取得
-    const target = document.querySelector('.resultCard'); 
+    const target = document.getElementById('captureRegion'); 
 
-    if (!target) {
+    if (!target || document.getElementById('resultArea').innerHTML.trim() === "") {
         alert("診断を完了させてから保存してください。");
         return;
     }
 
-    // 2. 【重要】保存したくない要素（長い説明や相性）を一時的に非表示にする
+    // 保存したくない要素（長い説明や相性診断）を一時的に隠す
     const longText = target.querySelector('.longText');
     const compatibility = target.querySelector('.compatibilityArea');
     
     if (longText) longText.style.display = 'none';
     if (compatibility) compatibility.style.display = 'none';
 
-    // 3. html2canvasを実行
     html2canvas(target, {
-        backgroundColor: "#ffffff", 
+        backgroundColor: "#cfe1fd", 
         scale: 2,
         useCORS: true 
     }).then(canvas => {
@@ -27,14 +25,13 @@ document.getElementById('save-image').addEventListener('click', function() {
         link.download = '17Elements_鑑定書.png';
         link.click();
 
-        // 4. 保存が終わったら画面上の表示を元に戻す
+        // 保存が終わったら表示を戻す
         if (longText) longText.style.display = 'block';
         if (compatibility) compatibility.style.display = 'block';
         
     }).catch(err => {
         console.error("保存失敗:", err);
         alert("画像の保存に失敗しました。");
-        // エラー時も表示を元に戻す
         if (longText) longText.style.display = 'block';
         if (compatibility) compatibility.style.display = 'block';
     });
@@ -47,11 +44,16 @@ document.getElementById('copy-result').addEventListener('click', function() {
 
     const text = `私の元素は【${characterName}】でした！\n#元素診断 #レアアース性格診断\nhttps://17rareearth.github.io/17character/index_uranai.html`;
     
-    if (navigator.clipboard) {
+    // コピー機能のチェックと実行
+    if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(() => {
             alert(`【${characterName}】の結果をコピーしました！SNSに貼り付けてね。`);
+        }).catch(err => {
+            console.error("コピー失敗:", err);
+            alert("コピーに失敗しました。");
         });
     } else {
-        alert("コピー機能がサポートされていません。");
+        // サポートされていないブラウザ用のアラート
+        alert("お使いのブラウザではコピー機能がサポートされていません。手動でコピーしてください。");
     }
 });
