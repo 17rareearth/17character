@@ -73,6 +73,13 @@ button {
 button:hover {
   background: #018a5c;
 }
+
+/* 「👉 あてはまる答え〜」の指示文に上の余白を作る */
+.description b {
+    display: inline-block; /* 余白（margin）を有効にするために必要 */
+    margin-top: 25px;      /* ★ここで上の行との間隔を調整（数字を大きくすると広がります） */
+    font-size: 15px;       /* 指示文として見やすい大きさに */
+}
 </style>
 <script type="application/ld+json">
 {
