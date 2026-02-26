@@ -1,46 +1,45 @@
-// 「画像で保存」ボタンをクリックした時の処理
-// 「画像で保存」ボタンをクリックした時の処理
+// 「画像で保存」ボタンの処理
 document.getElementById('save-image').addEventListener('click', function() {
-    // HTMLのIDに合わせて「resultArea」に変更しました
-    const target = document.getElementById('resultArea'); 
+    const target = document.getElementById('captureRegion'); 
 
-    // もし結果が表示される前なら警告を出す
-    if (!target || target.innerHTML === "") {
+    // 結果が入っているかチェック
+    const resultArea = document.getElementById('resultArea');
+    if (!target || !resultArea || resultArea.innerHTML.trim() === "") {
         alert("診断を完了させてから保存してください。");
         return;
     }
 
-    // html2canvasを実行
+    // 保存処理
     html2canvas(target, {
-        backgroundColor: "#ffffff", // 背景を白にする
-        scale: 2, // 高画質化
-        useCORS: true // 外部画像（キャラ絵など）がある場合の対策
+        backgroundColor: "#cfe1fd", 
+        scale: 2,
+        useCORS: true 
     }).then(canvas => {
         const image = canvas.toDataURL("image/png");
         const link = document.createElement('a');
         link.href = image;
         link.download = '17Elements_鑑定書.png';
         link.click();
+    }).catch(err => {
+        console.error("保存失敗:", err);
+        alert("画像の保存に失敗しました。");
     });
 });
 
-// 「結果をコピー」ボタンをクリックした時の処理
+// 「結果をコピー」ボタンの処理
 document.getElementById('copy-result').addEventListener('click', function() {
-    // 実際にはここをJavaScriptで動的に「ネオジム」などに書き換える処理が必要ですが
-    // まずはベースの文章を設定します
-    const text = "私の元素は【キャラクター名】でした！\n性格タイプ：BRIGHT\n#元素診断 #レアアース性格診断\nhttps://17rareearth.github.io/17character/index_uranai.html";
-    
-    navigator.clipboard.writeText(text).then(() => {
-        alert("結果をコピーしました！SNSに貼り付けてね。");
-    });
-});
+    // 画面上の <h2> タグからキャラクター名を取得する
+    const h2Element = document.querySelector('#resultArea h2');
+    const characterName = h2Element ? h2Element.innerText : "レアアース";
 
-/* 画像化する範囲のスタイル */
-#resultArea {
-    padding: 30px; /* 保存した時に余白があるときれいに見えます */
-    background-color: #ffffff; 
-    border-radius: 15px;
-    border: 1px solid #eeeeee; /* 薄い枠線 */
-    margin-bottom: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* 画面上での立体感 */
-}
+    // 文章を組み立てる（${characterName} の部分に実際の名前が入ります）
+    const text = `私の元素は【${characterName}】でした！\n#元素診断 #レアアース性格診断\nhttps://17rareearth.github.io/17character/index_uranai.html`;
+    
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => {
+            alert(`【${characterName}】の結果をコピーしました！SNSに貼り付けてね。`);
+        });
+    } else {
+        alert("お使いのブラウザではコピー機能がサポートされていません。");
+    }
+});
