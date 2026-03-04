@@ -30,7 +30,7 @@ window.onload = function () {
       long: "あなたは「場の摩擦を消し去る、天性の調律師」。\n個性が強い人たちの間にそっと入り、全体を整える力があります。気づかれにくいけれど、いないと全体が崩れます。\n人の役に立つことに安心を覚えるタイプで、あなたの存在が周囲の潤滑油になっています。\n\n【アドバイス】\n縁の下の力持ちは、一番重い場所。たまには自分の「やりたいこと」を優先して、自分の心のネジも締め直してあげてください。",
       bestPartner: "ユウロピウム", partnerEmoji: "✨",
       partnerReason: "あなたは、光を鮮やかな虹に変える「プリズム」のような存在。相手が持つ強烈なエネルギーがあなたを通ることで、温かく柔らかな希望の光へと変わります。相手を輝かせることが、巡り巡ってあなた自身の人生を色彩豊かに彩り、 毎日を鮮やかに照らしてくれる。そんな不思議な運命を感じられるパートナーです。",
-      E: 3, A: 3, S: 3, C: 3
+      E: 3.2, A: 2.8, S: 3.1, C: 2.9
     },
     {
       name: "ランタン", symbol: "La", emoji: "🌞",
@@ -230,6 +230,10 @@ window.onload = function () {
   const top2 = elements[1];
   const top3 = elements[2];
 
+  <div style="background-color: #ffeb3b; color: #333; text-align: center; padding: 15px; font-weight: bold; border-bottom: 3px solid #fbc02d; font-size: 1.2em; position: sticky; top: 0; z-index: 9999;">
+    ⚠️ 現在ロジックおよびキャラクターデータの最終調整中です。一部の結果が不安定な場合があります。
+  </div>
+  
   // 表示HTML生成
   let html = `
     <div class="resultCard">
@@ -238,18 +242,18 @@ window.onload = function () {
       <p style="font-weight:bold; color:#555;">${top1.short}</p>
       <h3>「${top1.catch}」</h3>
       <div class="scoreDisplay">適合度: <strong>${top1.score}%</strong></div>
-      <img src="img/${top1.image}" class="charImage">
+      <img src="${top1.image}" class="charImage">
       <div class="longText">${top1.long.replace(/\n/g, "<br>")}</div>
       <div class="compatibilityArea">
         <h4>🤝 相性の良いパートナー</h4>
-        <img src="img/${top1.partnerImage}" style="width: 100px;">
+        <img src="${top1.partnerImage}" style="width: 100px;">
         <p><strong>${top1.partnerEmoji} ${top1.bestPartner}</strong></p>
         <p style="font-size:14px; text-align:left; line-height:1.6;">${top1.partnerReason}</p>
       </div>
     </div>
     <div style="text-align:center; margin: 20px 0; color:#888;">▼ 他にあなたに近いレアアース</div>
     <div class="resultCard" style="padding:15px; border-top:4px solid #bdc3c7; display:flex; align-items:center; gap:15px;">
-      <img src="img/${top2.image}" style="width:80px;">
+      <img src="${top2.image}" style="width:80px;">
       <div style="text-align:left;">
         <div style="font-size:12px; color:#666;">第2位 適合度 ${top2.score}%</div>
         <h4 style="margin:5px 0;">${top2.emoji} ${top2.name}</h4>
@@ -257,7 +261,7 @@ window.onload = function () {
       </div>
     </div>
     <div class="resultCard" style="padding:15px; border-top:4px solid #bdc3c7; display:flex; align-items:center; gap:15px; margin-top:10px;">
-      <img src="img/${top3.image}" style="width:80px;">
+      <img src="${top3.image}" style="width:80px;">
       <div style="text-align:left;">
         <div style="font-size:12px; color:#666;">第3位 適合度 ${top3.score}%</div>
         <h4 style="margin:5px 0;">${top3.emoji} ${top3.name}</h4>
