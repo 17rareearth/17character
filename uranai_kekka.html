@@ -1,231 +1,128 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🔮 診断結果 | レアアース診断</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🔮 診断結果 | レアアース診断</title>
 
-<style>
-/* 全体のデザイン設定 */
-body {
-  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-  background: #cfe1fd;
-  color: #333;
-  margin: 0;
-  padding: 20px;
-  line-height: 1.8;
-}
+  <style>
+    /* CSSはそのまま */
+    body {
+      font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+      background: #cfe1fd;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.8;
+    }
 
-h1 {
-  text-align: center;
-  color: #2c3e50;
-  margin-bottom: 30px;
-}
+    #resultArea {
+      max-width: 600px;
+      margin: 0 auto;
+    }
 
-/* 結果を表示するメインエリア */
-#resultArea {
-  max-width: 600px;
-  margin: 0 auto;
-}
+    .resultCard {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      border-top: 8px solid #5b7cfa;
+      text-align: center;
+    }
 
-/* 診断結果カードのデザイン */
-.resultCard {
-  background: white;
-  padding: 30px;
-  border-radius: 20px;
-  margin-bottom: 40px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-  border-top: 8px solid #5b7cfa;
-  position: relative;
-  overflow: hidden;
-}
+    .rankLabel {
+      display: inline-block;
+      background: #5b7cfa;
+      color: white;
+      padding: 4px 15px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
 
-/* 第1位、2位などのラベル */
-.rankLabel {
-  display: inline-block;
-  background: #5b7cfa;
-  color: white;
-  padding: 4px 15px;
-  border-radius: 50px;
-  font-size: 14px;
-  font-weight: bold;
-  margin-bottom: 15px;
-}
+    .scoreDisplay {
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
 
-/* 元素名 */
-.resultCard h2 {
-  margin: 0 0 10px 0;
-  font-size: 24px;
-  color: #2c3e50;
-}
+    .scoreDisplay strong {
+      font-size: 24px;
+      color: #e74c3c;
+    }
 
-/* キャッチコピー */
-.catchCopy {
-  font-size: 18px;
-  font-weight: bold;
-  color: #5b7cfa;
-  margin-bottom: 20px;
-  padding: 10px;
-  background: #f0f4ff;
-  border-radius: 8px;
-  display: inline-block;
-}
+    .charImage {
+      width: 200px;
+      height: auto;
+      display: block;
+      margin: 20px auto;
+    }
 
-/* 適合度スコア */
-.scoreDisplay {
-  font-size: 16px;
-  margin-bottom: 15px;
-}
-.scoreDisplay strong {
-  font-size: 24px;
-  color: #e74c3c;
-}
+    .longText {
+      text-align: left;
+      background: #ffffff;
+      padding: 15px 0;
+      border-top: 1px dashed #ddd;
+      margin-top: 20px;
+      font-size: 15px;
+      white-space: pre-wrap;
+      /* 改行を反映させる */
+    }
 
-/* キャラクター画像 */
-.charImage {
-  width: 200px;
-  height: auto;
-  display: block;
-  margin: 20px auto;
-}
+    .compatibilityArea {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 25px;
+      border: 1px solid #eef0f2;
+    }
 
-/* 説明文 */
-.longText {
-  background: #ffffff;
-  padding: 15px 0;
-  border-top: 1px dashed #ddd;
-  margin-top: 20px;
-  font-size: 15px;
-}
-
-/* 相性診断エリア */
-.compatibilityArea {
-  background: #f8f9fa;
-  padding: 20px;
-  border-radius: 12px;
-  margin-top: 25px;
-  border: 1px solid #eef0f2;
-}
-
-.compatibilityArea h4 {
-  margin: 0 0 10px 0;
-  color: #2c3e50;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-}
-
-.partnerReason {
-  font-size: 14px;
-  color: #666;
-  margin: 5px 0 0 0;
-}
-
-/* ボタン（もう一度診断するなど） */
-.actions {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.btn {
-  display: inline-block;
-  background: #2c3e50;
-  color: white;
-  padding: 12px 30px;
-  text-decoration: none;
-  border-radius: 50px;
-  font-weight: bold;
-  transition: background 0.3s;
-}
-
-.btn:hover {
-  background: #34495e;
-}
-</style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    .btn-action {
+      width: 280px;
+      padding: 12px 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #fdfdfd;
+      color: #333;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin: 10px auto;
+      text-decoration: none;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
+
 <body>
 
-<div id="captureRegion">
-  <h1>🔮 レアアース性格診断 鑑定書</h1>
-  <div id="resultArea">
+  <div id="captureRegion">
+    <h1 style="text-align: center;">🔮 レアアース性格診断 鑑定書</h1>
+    <div id="resultArea">
+    </div>
   </div>
-</div>
 
-<div class="actions">
-  <a href="index_uranai.html" class="btn">もう一度診断する</a>
-</div>
+  <div class="result-actions">
+    <button id="save-image" class="btn-action">
+      <span>🎖️</span> 結果を画像で保存
+    </button>
 
-<script src="js/kekka.js"></script>
+    <a href="seikaku17.html" class="btn-action">
+      <span>🗂️</span> 全17キャラの性格を見る
+    </a>
 
-<div class="result-actions">
-  <button id="save-image" class="btn-action">
-    <span>🎖️</span> 結果を画像で保存
-  </button>
+    <a href="index_uranai.html" class="btn-action" style="background: #2c3e50; color: white;">
+      <span>←</span> もう一度診断する
+    </a>
+  </div>
 
-  <button id="copy-result" class="btn-action">
-    <span>🔗</span> 結果をコピー
-  </button>
-
-  <a href="seikaku17.html" class="btn-action link-style">
-    <span>🗂️</span> 全17キャラの性格を見る
-  </a>
-</div>
-
-<style>
-  .result-actions {
-    display: flex;
-    flex-direction: column;
-    /* スマホなら縦並び、PCなら横並び(row)もアリ */
-    gap: 15px;
-    margin-top: 30px;
-    align-items: center;
-  }
-
-  .btn-action {
-    width: 280px;
-    padding: 12px 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background: #fdfdfd;
-    /* 少し高級感のある白 */
-    color: #333;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-    text-decoration: none;
-    /* リンク用 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .btn-action:hover {
-    background: #eee;
-    transform: translateY(-2px);
-  }
-
-#resultArea {
-    padding: 30px; 
-    background-color: #ffffff; 
-    border-radius: 15px;
-    border: 1px solid #eeeeee; 
-    margin-bottom: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
-}
-</style>
-
-<div style="text-align: center; margin-top: 40px; margin-bottom: 40px;">
-  <a href="index.html" class="flex items-center text-indigo-600 font-bold hover:opacity-70 transition"
-    style="text-decoration: none; color: #5b7cfa;">
-    <span class="text-lg mr-1">←</span> トップページに戻る
-  </a>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="js/kekka.js"></script>
-<script src="js/download.js"></script>
+  <script src="js/kekka.js"></script>
+  <script src="js/download.js"></script>
 
 </body>
 
