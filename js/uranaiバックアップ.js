@@ -35,22 +35,11 @@ function startUranai() {
     C: answers.q10 + answers.q11 + answers.q12
   };
 
-  // 3. データをlocalStorageに保存（本番サーバー用）
-  try {
-    localStorage.setItem("uranaiScore", JSON.stringify(user));
-    localStorage.setItem("uranaiAnswers", JSON.stringify(answers));
-  } catch(e) {
-    // localStorageが使えない環境（file://など）では無視して続行
-    console.log("localStorage使用不可。URLパラメータで渡します。");
-  }
+  // 3. データをブラウザに保存
+  localStorage.setItem("uranaiScore", JSON.stringify(user));
+  localStorage.setItem("uranaiAnswers", JSON.stringify(answers));
 
-  // 4. URLパラメータにもスコアを埋め込んで結果ページへ移動
-  //    → ローカルファイル(file://)でも確実に動作する
-  const params = new URLSearchParams({
-    E: user.E,
-    A: user.A,
-    S: user.S,
-    C: user.C
-  });
-  window.location.href = "uranai_kekka.html?" + params.toString();
+  // 4. 結果ページへ移動
+  // ※ファイル名が「kekka.html」か「uranai_kekka.html」か、ご自身の環境に合わせて確認してください
+  window.location.href = "uranai_kekka.html";
 }
