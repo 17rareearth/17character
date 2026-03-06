@@ -44,7 +44,7 @@ function startUranai() {
     console.log("localStorage使用不可。URLパラメータで渡します。");
   }
 
-  // 4. URLパラメータにもスコアを埋め込んで結果ページへ移動
+  // 4. URLパラメータにもスコアを埋め込んで結果ページへ移動。
   //    → ローカルファイル(file://)でも確実に動作する
   const params = new URLSearchParams({
     E: user.E,
