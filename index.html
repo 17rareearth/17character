@@ -661,38 +661,106 @@
         </div>
     </section>
 
-    <!-- 【新設】ユニット紹介セクション -->
-    <section id="units" class="py-20 bg-indigo-50/50">
-        <div class="max-w-5xl mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold mb-12 font-rounded">活躍ユニット紹介</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-indigo-100 unit-card">
+<section id="units" class="py-20 bg-indigo-50/50">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+        <h2 class="text-3xl font-bold mb-12 font-rounded">活躍ユニット紹介</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+            <div
+                class="bg-white p-6 rounded-2xl shadow-sm border border-indigo-100 unit-card flex flex-col justify-between">
+                <div>
                     <div class="text-3xl mb-4">🧲</div>
                     <h4 class="font-bold mb-2 font-rounded">磁石ユニット</h4>
-                    <p class="text-xs text-slate-500 leading-relaxed">EVや風力発電のモーターを支える力持ちチーム。</p>
-                    Coming soon...
+                    <p class="text-xs text-slate-500 leading-relaxed mb-4">EVや風力発電のモーターを支える力持ちチーム。</p>
                 </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-emerald-100 unit-card">
+                <div class="mt-2 overflow-hidden rounded-xl bg-slate-50 border border-slate-100">
+                    <img src="https://placehold.co/781x781?text=Magnet+Unit" alt="磁石ユニット"
+                        class="w-full h-auto object-cover cursor-pointer hover:opacity-90 hover:scale-105 transition-all duration-300"
+                        onclick="openModal(this.src, '磁石ユニット')" loading="lazy" width="781" height="781">
+                </div>
+            </div>
+
+            <div
+                class="bg-white p-6 rounded-2xl shadow-sm border border-emerald-100 unit-card flex flex-col justify-between">
+                <div>
                     <div class="text-3xl mb-4">🏥</div>
                     <h4 class="font-bold mb-2 font-rounded">医療ユニット</h4>
-                    <p class="text-xs text-slate-500 leading-relaxed">がん治療やMRI診断など、命を守る現場のプロ。</p>
-                                    Coming soon...
+                    <p class="text-xs text-slate-500 leading-relaxed mb-4">がん治療やMRI診断など、命を守る現場のプロ。</p>
                 </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-orange-100 unit-card">
+                <div class="mt-2 overflow-hidden rounded-xl bg-slate-50 border border-slate-100">
+                    <img src="https://placehold.co/781x781?text=Medical+Unit" alt="医療ユニット"
+                        class="w-full h-auto object-cover cursor-pointer hover:opacity-90 hover:scale-105 transition-all duration-300"
+                        onclick="openModal(this.src, '医療ユニット')" loading="lazy" width="781" height="781">
+                </div>
+            </div>
+
+            <div
+                class="bg-white p-6 rounded-2xl shadow-sm border border-orange-100 unit-card flex flex-col justify-between">
+                <div>
                     <div class="text-3xl mb-4">📱</div>
                     <h4 class="font-bold mb-2 font-rounded">通信ユニット</h4>
-                    <p class="text-xs text-slate-500 leading-relaxed">スマホの画面や光通信を支える立役者たち。</p>
-                                    Coming soon...
+                    <p class="text-xs text-slate-500 leading-relaxed mb-4">スマホの画面や光通信を支える立役者たち。</p>
                 </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 unit-card">
+                <div class="mt-2 overflow-hidden rounded-xl bg-slate-50 border border-slate-100">
+                    <img src="unit_tsushin.png" alt="通信ユニット"
+                        class="w-full h-auto object-cover cursor-pointer hover:opacity-90 hover:scale-105 transition-all duration-300"
+                        onclick="openModal(this.src, '通信ユニット')" loading="lazy" width="781" height="781">
+                </div>
+            </div>
+
+            <div
+                class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 unit-card flex flex-col justify-between">
+                <div>
                     <div class="text-3xl mb-4">🚀</div>
                     <h4 class="font-bold mb-2 font-rounded">宇宙ユニット</h4>
-                    <p class="text-xs text-slate-500 leading-relaxed">過酷な環境に耐える特殊素材を支える精鋭。</p>
-                                    Coming soon...
+                    <p class="text-xs text-slate-500 leading-relaxed mb-4">過酷な環境に耐える特殊素材を支える精鋭。</p>
+                </div>
+                <div class="mt-2 overflow-hidden rounded-xl bg-slate-50 border border-slate-100">
+                    <img src="https://placehold.co/781x781?text=Space+Unit" alt="宇宙ユニット"
+                        class="w-full h-auto object-cover cursor-pointer hover:opacity-90 hover:scale-105 transition-all duration-300"
+                        onclick="openModal(this.src, '宇宙ユニット')" loading="lazy" width="781" height="781">
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
+<div id="imageModal" class="fixed inset-0 z-50 hidden bg-black/80 flex items-center justify-center p-4 backdrop-blur-sm"
+    onclick="closeModal()">
+    <div class="relative max-w-4xl w-full max-h-[90vh] flex flex-col items-center justify-center"
+        onclick="event.stopPropagation()">
+        <button onclick="closeModal()"
+            class="absolute -top-12 right-0 text-white text-3xl font-bold hover:text-gray-300 focus:outline-none cursor-pointer"
+            aria-label="閉じる">&times;</button>
+        <img id="modalImage" src="" alt="" class="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl">
+        <p id="modalCaption" class="text-white mt-4 text-center font-bold text-lg font-rounded"></p>
+    </div>
+</div>
+
+<script>
+    function openModal(imageSrc, caption) {
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const modalCap = document.getElementById('modalCaption');
+
+        modalImg.src = imageSrc;
+        modalCap.textContent = caption;
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; // 背面のスクロール防止
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('imageModal');
+        modal.classList.add('hidden');
+        document.body.style.overflow = ''; // スクロール再開
+    }
+
+    // ESCキーで閉じる処理
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            closeModal();
+        }
+    });
+</script>
     
     <!-- 【新設】データマップ -->
     <section id="data" class="py-20 bg-slate-900 text-white">
