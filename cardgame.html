@@ -6,84 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>レアアース17元素カードゲーム（印刷・保存用）</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @media print {
 
-            /* 印刷時はヘッダーやフッター、余白を完全に除外 */
-            .no-print {
-                display: none !important;
-            }
-
-            html,
-            body {
-                background: white !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                width: 100% !important;
-                height: auto !important;
-            }
-
-            main {
-                display: block !important;
-                width: 100% !important;
-                margin: 0 !important;
-                padding: 0 !important;
-            }
-
-            .print-page {
-                width: 100% !important;
-                max-width: 100% !important;
-                height: auto !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                border: none !important;
-                border-radius: 0 !important;
-                box-shadow: none !important;
-                /* 画像ごとに確実に改ページし、余計な白紙が入らないように指定 */
-                page-break-inside: avoid;
-                break-inside: avoid;
-                page-break-after: always;
-                break-after: page;
-            }
-
-            /* 最後の画像の後には改ページを入れない */
-            .print-page:last-child {
-                page-break-after: auto;
-                break-after: auto;
-            }
-        }
-    </style>
-</head>
-
-<body class="bg-slate-100 min-h-screen py-8 px-4 flex flex-col items-center">
-
-    <!-- ヘッダー（印刷時は非表示） -->
-    <header class="no-print max-w-2xl w-full text-center mb-6">
-        <h1 class="text-xl font-bold text-slate-800 mb-2">レアアース17元素 カード＆選別シート</h1>
-        <p class="text-xs text-slate-600 mb-4">スマホの場合は画像を長押しで保存できます。パソコンの場合は下のボタンから直接印刷できます。</p>
-        <button onclick="window.print()"
-            class="bg-blue-600 text-white px-6 py-2 rounded-full text-sm font-bold shadow-sm hover:bg-blue-700 transition-colors">
-            🖨️ このページを印刷する
-        </button>
-    </header>
-
-    <!-- 画像コンテナ -->
-    <main class="max-w-3xl w-full flex flex-col gap-6 items-center">
-        <img src="cardgame1.png" alt="神経衰弱カード 1枚目"
-            class="print-page w-full bg-white rounded-2xl shadow-sm border border-slate-200">
-        <img src="cardgame2.png" alt="神経衰弱カード 2枚目"
-            class="print-page w-full bg-white rounded-2xl shadow-sm border border-slate-200">
-        <img src="cardgame3.png" alt="神経衰弱カード 3枚目"
-            class="print-page w-full bg-white rounded-2xl shadow-sm border border-slate-200">
-        <img src="cardgame4.png" alt="選別シート"
-            class="print-page w-full bg-white rounded-2xl shadow-sm border border-slate-200">
-    </main>
-
-    <!-- フッター（印刷時は非表示） -->
-    <footer class="no-print mt-8 text-center">
-        <a href="index.html" class="text-sm text-slate-500 underline hover:text-slate-800">← 図鑑トップページへ戻る</a>
-    </footer>
-
+    <!-- 構造化データ（リッチリザルト対応・印刷には影響しません） -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -99,14 +23,111 @@
       "image": [
         "https://17rareearth.github.io/17character/cardgame1.png",
         "https://17rareearth.github.io/17character/cardgame4.png"
-      ],
-      "publisher": {
-        "@type": "Organization",
-        "name": "レアアース17元素キャラクター図鑑",
-        "url": "https://17rareearth.github.io/17character/"
-      }
+      ]
     }
     </script>
+
+    <style>
+        /* --- 画面表示用のレイアウト --- */
+        body {
+            background-color: #f1f5f9;
+            margin: 0;
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: sans-serif;
+        }
+
+        .card-img {
+            width: 100%;
+            max-width: 48rem;
+            height: auto;
+            background-color: #ffffff;
+            border-radius: 1rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- 印刷（1枚＝1ページ・余白ゼロ）完全固定ルール --- */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 0;
+                /* プリンタ自体の用紙余白をゼロにする */
+            }
+
+            body {
+                background: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                display: block !important;
+            }
+
+            .no-print {
+                display: none !important;
+                /* 画面上のボタンやテキストを非表示 */
+            }
+
+            main {
+                display: block !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .card-img {
+                width: 100vw !important;
+                height: 100vh !important;
+                object-fit: contain !important;
+                /* 画像全体を収める */
+                border: none !important;
+                border-radius: 0 !important;
+                box-shadow: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+
+                /* 強制改ページ設定 */
+                page-break-before: always !important;
+                break-before: page !important;
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            /* 1枚目の前だけは改ページしない */
+            .card-img:first-child {
+                page-break-before: auto !important;
+                break-before: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ヘッダー（印刷時は消えます） -->
+    <header class="no-print max-w-2xl w-full text-center mb-6">
+        <h1 class="text-xl font-bold text-slate-800 mb-2">レアアース17元素 カード＆選別シート</h1>
+        <p class="text-xs text-slate-600 mb-4">スマホの場合は画像を長押しで保存できます。パソコンの場合は下のボタンから直接印刷できます。</p>
+        <button onclick="window.print()"
+            class="bg-blue-600 text-white px-6 py-2 rounded-full text-sm font-bold shadow-sm hover:bg-blue-700 transition-colors">
+            🖨️ このページを印刷する
+        </button>
+    </header>
+
+    <!-- 画像一覧（1ページに1枚ずつぴったり収まります） -->
+    <main class="max-w-3xl w-full flex flex-col gap-6 items-center">
+        <img src="cardgame1.png" alt="神経衰弱カード 1枚目" class="card-img">
+        <img src="cardgame2.png" alt="神経衰弱カード 2枚目" class="card-img">
+        <img src="cardgame3.png" alt="神経衰弱カード 3枚目" class="card-img">
+        <img src="cardgame4.png" alt="選別シート" class="card-img">
+    </main>
+
+    <!-- フッター（印刷時は消えます） -->
+    <footer class="no-print mt-8 text-center">
+        <a href="index.html" class="text-sm text-slate-500 underline hover:text-slate-800">← 図鑑トップページへ戻る</a>
+    </footer>
 
 </body>
 
