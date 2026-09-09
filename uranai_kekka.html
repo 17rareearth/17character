@@ -361,15 +361,8 @@
     top2.displayScore = Math.max(60, Math.min(top1.displayScore - 5, Math.round(top2.scoreValue * 100) + 15));
     top3.displayScore = Math.max(50, Math.min(top2.displayScore - 5, Math.round(top3.scoreValue * 100) + 10));
 
-    // 調整中バナー
-    const maintenanceBanner = `
-      <div style="background-color: #ffeb3b; color: #333; text-align: center; padding: 15px; font-weight: bold; border-bottom: 3px solid #fbc02d; font-size: 1.2em; position: sticky; top: 0; z-index: 9999; margin-bottom: 20px;">
-        ⚠️ 現在ロジックおよびキャラクターデータの最終調整中です。一部の結果が不安定な場合があります。
-      </div>
-    `;
-
     // 結果HTML生成
-    let html = maintenanceBanner + `
+    let html = `
       <div class="resultCard">
         <div class="rankLabel">あなたに最も近いレアアース</div>
         <h2>${top1.emoji} ${top1.name}（${top1.symbol}）</h2>
