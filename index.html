@@ -100,14 +100,14 @@
         </div>
     </nav>
 
-<!-- お知らせバナー（高さ自動固定・JavaScript完全切替版） -->
-<div class="bg-amber-50 border-b border-amber-200 relative py-2.5 px-4">
-    <div class="max-w-7xl mx-auto flex items-center justify-between gap-3 pr-8 min-h-[40px]">
+<!-- お知らせバナー（高さ完全固定・矢印アニメーション付き） -->
+<div class="bg-amber-50 border-b border-amber-200 relative py-2.5 px-4 min-h-[56px] flex items-center">
+    <div class="max-w-7xl mx-auto w-full flex items-center justify-between gap-3 pr-8">
 
         <!-- ニュースコンテンツ表示エリア -->
         <div class="w-full text-xs sm:text-sm text-amber-900 leading-normal">
 
-            <!-- ニュース1：メディア掲載（初期表示） -->
+            <!-- ニュース1：メディア掲載 -->
             <div id="news-item-1"
                 class="news-ticker-item flex items-start sm:items-center gap-2 transition-opacity duration-300">
                 <span
@@ -117,7 +117,7 @@
                 </span>
             </div>
 
-            <!-- ニュース2：LINEスタンプ（初期非表示） -->
+            <!-- ニュース2：LINEスタンプ -->
             <div id="news-item-2"
                 class="news-ticker-item hidden flex items-start sm:items-center gap-2 transition-opacity duration-300">
                 <span
@@ -140,11 +140,11 @@
 
         </div>
 
-        <!-- 右端の切替ボタン -->
+        <!-- 右端の切替ボタン（bounceアニメーション復活） -->
         <button onclick="switchNewsNext()"
-            class="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 text-amber-700 hover:text-amber-900 hover:bg-amber-100 transition rounded-full flex items-center justify-center"
+            class="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 text-amber-700 hover:text-amber-900 transition flex items-center justify-center rounded-full"
             title="次のニュースを表示">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
             </svg>
         </button>
@@ -152,11 +152,22 @@
     </div>
 </div>
 
-<!-- 切替用JavaScript（5秒ごとに自動切り替え＋ボタン手動切り替え） -->
+<!-- JavaScript（高さ自動固定＋タイマー） -->
 <script>
     let currentNewsIndex = 1;
     const totalNews = 2;
     let newsTimer = null;
+
+    function initNewsTickerHeight() {
+        const item1 = document.getElementById('news-item-1');
+        const container = item1 ? item1.parentElement : null;
+        if (item1 && container) {
+            const initialHeight = item1.offsetHeight;
+            if (initialHeight > 0) {
+                container.style.minHeight = initialHeight + 'px';
+            }
+        }
+    }
 
     function showNews(index) {
         for (let i = 1; i <= totalNews; i++) {
@@ -176,22 +187,37 @@
         let nextIndex = currentNewsIndex + 1;
         if (nextIndex > totalNews) nextIndex = 1;
         showNews(nextIndex);
-        resetNewsTimer(); // 手動操作時にタイマーリセット
+        resetNewsTimer();
     }
 
     function startNewsTimer() {
-        newsTimer = setInterval(() => {
-            switchNewsNext();
-        }, 5000); // 5秒ごとに自動切り替え
+        if (!newsTimer) {
+            newsTimer = setInterval(() => {
+                switchNewsNext();
+            }, 5000);
+        }
     }
 
     function resetNewsTimer() {
-        if (newsTimer) clearInterval(newsTimer);
+        if (newsTimer) {
+            clearInterval(newsTimer);
+            newsTimer = null;
+        }
         startNewsTimer();
     }
 
-    // ページ読み込み時にタイマー開始
-    document.addEventListener('DOMContentLoaded', startNewsTimer);
+    function startTickerSequence() {
+        initNewsTickerHeight();
+        startNewsTimer();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', startTickerSequence);
+    } else {
+        startTickerSequence();
+    }
+
+    window.addEventListener('resize', initNewsTickerHeight);
 </script>
 
     <!-- Hero Section -->
