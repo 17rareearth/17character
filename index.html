@@ -100,41 +100,76 @@
         </div>
     </nav>
 
-<!-- お知らせボックス（スクロール型） -->
-<div class="bg-amber-50 border-b border-amber-200">
-    <div class="max-w-7xl mx-auto px-4 py-2">
-        <!-- 高さを固定してスクロールバーを表示 -->
-        <div class="max-h-16 overflow-y-auto pr-1 space-y-2 text-sm text-amber-900 scrollbar-thin">
+<!-- お知らせバナー（自動切り替え＆矢印ナビ付き） -->
+<div class="bg-amber-50 border-b border-amber-200 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 py-2.5 pr-10 flex items-center justify-between min-h-[48px]">
 
-            <!-- ニュース1：メディア掲載（最上部） -->
-            <div class="flex items-center gap-2 flex-wrap sm:flex-nowrap">
-                <span class="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded shrink-0">MEDIA</span>
-                <span class="font-medium">
-                    【メディア掲載のお知らせ】静岡朝日テレビ『池上彰の発掘！静岡のチカラ Part17』にて、当サイトの「レアアース17元素キャラ図鑑」のキャラクターをご紹介いただきました！
-                </span>
+        <!-- ニュースコンテンツエリア（アニメーション付き） -->
+        <div class="w-full relative h-6 overflow-hidden">
+            <div class="animate-news-slide w-full">
+
+                <!-- ニュース1：メディア掲載 -->
+                <div class="h-6 flex items-center gap-2 text-sm text-amber-900 truncate">
+                    <span class="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded shrink-0">MEDIA</span>
+                    <span class="font-medium truncate">
+                        【メディア掲載】静岡朝日テレビ『池上彰の発掘！静岡のチカラ Part17』にてキャラクターをご紹介いただきました！
+                    </span>
+                </div>
+
+                <!-- ニュース2：LINEスタンプ -->
+                <div class="h-6 flex items-center gap-2 text-sm text-amber-900 truncate">
+                    <span class="bg-amber-400 text-white text-xs font-bold px-2 py-0.5 rounded shrink-0">NEW</span>
+                    <span class="font-medium truncate">
+                        レアアース17元素キャラ図鑑の
+                        <a href="https://store.line.me/stickershop/author/6218780/ja" target="_blank"
+                            rel="noopener noreferrer" class="underline font-bold hover:text-amber-600">LINEスタンプ</a>
+                        がリリース！
+                    </span>
+                </div>
+
             </div>
-
-            <!-- ニュース2：LINEスタンプ（2番目） -->
-            <div class="flex items-center gap-2 flex-wrap sm:flex-nowrap">
-                <span class="bg-amber-400 text-white text-xs font-bold px-2 py-0.5 rounded shrink-0">NEW</span>
-                <span class="font-medium">
-                    レアアース17元素キャラ図鑑の
-                    <a href="https://store.line.me/stickershop/author/6218780/ja" target="_blank"
-                        rel="noopener noreferrer"
-                        class="underline underline-offset-2 font-bold hover:text-amber-600 transition">
-                        LINEスタンプ
-                    </a>
-                    がリリースされました！
-                </span>
-                <a href="https://store.line.me/stickershop/author/6218780/ja" target="_blank" rel="noopener noreferrer"
-                    class="bg-green-500 text-white text-xs font-bold px-3 py-0.5 rounded-full hover:bg-green-600 transition inline-block shrink-0 ml-auto">
-                    ▶ LINEショップで見る
-                </a>
-            </div>
-
         </div>
+
+        <!-- 右端の矢印ナビ（クリックで次へ手動スクロール） -->
+        <button onclick="document.querySelector('.animate-news-slide').classList.toggle('pause-slide')"
+            class="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-amber-700 hover:text-amber-900 transition flex items-center justify-center"
+            title="ニュース切り替え">
+            <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
+            </svg>
+        </button>
+
     </div>
 </div>
+
+<!-- 自動切り替え用CSS（<head>内またはCSSファイルに追加） -->
+<style>
+    @keyframes newsSlide {
+
+        0%,
+        45% {
+            transform: translateY(0);
+        }
+
+        50%,
+        95% {
+            transform: translateY(-24px);
+        }
+
+        100% {
+            transform: translateY(0);
+        }
+    }
+
+    .animate-news-slide {
+        animation: newsSlide 10s infinite ease-in-out;
+    }
+
+    /* タップで一時停止・進行を切り替えるクラス */
+    .pause-slide {
+        animation-play-state: paused;
+    }
+</style>
 
     <!-- Hero Section -->
     <header class="hero-gradient text-white py-16 px-4 text-center">
