@@ -100,41 +100,51 @@
         </div>
     </nav>
 
-<!-- お知らせバナー（自動切り替え＆矢印ナビ付き） -->
-<div class="bg-amber-50 border-b border-amber-200 relative overflow-hidden">
-    <div class="max-w-7xl mx-auto px-4 py-2.5 pr-10 flex items-center justify-between min-h-[48px]">
+<!-- お知らせバナー（高さ自動固定・JavaScript完全切替版） -->
+<div class="bg-amber-50 border-b border-amber-200 relative py-2.5 px-4">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-3 pr-8 min-h-[40px]">
 
-        <!-- ニュースコンテンツエリア（アニメーション付き） -->
-        <div class="w-full relative h-6 overflow-hidden">
-            <div class="animate-news-slide w-full">
+        <!-- ニュースコンテンツ表示エリア -->
+        <div class="w-full text-xs sm:text-sm text-amber-900 leading-normal">
 
-                <!-- ニュース1：メディア掲載 -->
-                <div class="h-6 flex items-center gap-2 text-sm text-amber-900 truncate">
-                    <span class="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded shrink-0">MEDIA</span>
-                    <span class="font-medium truncate">
-                        【メディア掲載】静岡朝日テレビ『池上彰の発掘！静岡のチカラ Part17』にてキャラクターをご紹介いただきました！
-                    </span>
-                </div>
-
-                <!-- ニュース2：LINEスタンプ -->
-                <div class="h-6 flex items-center gap-2 text-sm text-amber-900 truncate">
-                    <span class="bg-amber-400 text-white text-xs font-bold px-2 py-0.5 rounded shrink-0">NEW</span>
-                    <span class="font-medium truncate">
-                        レアアース17元素キャラ図鑑の
-                        <a href="https://store.line.me/stickershop/author/6218780/ja" target="_blank"
-                            rel="noopener noreferrer" class="underline font-bold hover:text-amber-600">LINEスタンプ</a>
-                        がリリース！
-                    </span>
-                </div>
-
+            <!-- ニュース1：メディア掲載（初期表示） -->
+            <div id="news-item-1"
+                class="news-ticker-item flex items-start sm:items-center gap-2 transition-opacity duration-300">
+                <span
+                    class="bg-red-500 text-white text-[11px] font-bold px-1.5 py-0.5 rounded shrink-0 mt-0.5 sm:mt-0">MEDIA</span>
+                <span class="font-medium">
+                    【メディア掲載のおしらせ】静岡朝日テレビ『池上彰の発掘！静岡のチカラ Part17』にて、当サイトの「レアアース17元素キャラ図鑑」のキャラクターをご紹介いただきました！
+                </span>
             </div>
+
+            <!-- ニュース2：LINEスタンプ（初期非表示） -->
+            <div id="news-item-2"
+                class="news-ticker-item hidden flex items-start sm:items-center gap-2 transition-opacity duration-300">
+                <span
+                    class="bg-amber-400 text-white text-[11px] font-bold px-1.5 py-0.5 rounded shrink-0 mt-0.5 sm:mt-0">NEW</span>
+                <span class="font-medium">
+                    レアアース17元素キャラ図鑑の
+                    <a href="https://store.line.me/stickershop/author/6218780/ja" target="_blank"
+                        rel="noopener noreferrer"
+                        class="underline underline-offset-2 font-bold hover:text-amber-600 transition">
+                        LINEスタンプ
+                    </a>
+                    がリリースされました！
+                    <a href="https://store.line.me/stickershop/author/6218780/ja" target="_blank"
+                        rel="noopener noreferrer"
+                        class="inline-block bg-green-500 text-white text-[11px] font-bold px-2 py-0.5 rounded-full hover:bg-green-600 transition ml-1">
+                        ▶ LINEショップ
+                    </a>
+                </span>
+            </div>
+
         </div>
 
-        <!-- 右端の矢印ナビ（クリックで次へ手動スクロール） -->
-        <button onclick="document.querySelector('.animate-news-slide').classList.toggle('pause-slide')"
-            class="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-amber-700 hover:text-amber-900 transition flex items-center justify-center"
-            title="ニュース切り替え">
-            <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <!-- 右端の切替ボタン -->
+        <button onclick="switchNewsNext()"
+            class="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 text-amber-700 hover:text-amber-900 hover:bg-amber-100 transition rounded-full flex items-center justify-center"
+            title="次のニュースを表示">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
             </svg>
         </button>
@@ -142,34 +152,47 @@
     </div>
 </div>
 
-<!-- 自動切り替え用CSS（<head>内またはCSSファイルに追加） -->
-<style>
-    @keyframes newsSlide {
+<!-- 切替用JavaScript（5秒ごとに自動切り替え＋ボタン手動切り替え） -->
+<script>
+    let currentNewsIndex = 1;
+    const totalNews = 2;
+    let newsTimer = null;
 
-        0%,
-        45% {
-            transform: translateY(0);
+    function showNews(index) {
+        for (let i = 1; i <= totalNews; i++) {
+            const el = document.getElementById(`news-item-${i}`);
+            if (el) {
+                if (i === index) {
+                    el.classList.remove('hidden');
+                } else {
+                    el.classList.add('hidden');
+                }
+            }
         }
-
-        50%,
-        95% {
-            transform: translateY(-24px);
-        }
-
-        100% {
-            transform: translateY(0);
-        }
+        currentNewsIndex = index;
     }
 
-    .animate-news-slide {
-        animation: newsSlide 10s infinite ease-in-out;
+    function switchNewsNext() {
+        let nextIndex = currentNewsIndex + 1;
+        if (nextIndex > totalNews) nextIndex = 1;
+        showNews(nextIndex);
+        resetNewsTimer(); // 手動操作時にタイマーリセット
     }
 
-    /* タップで一時停止・進行を切り替えるクラス */
-    .pause-slide {
-        animation-play-state: paused;
+    function startNewsTimer() {
+        newsTimer = setInterval(() => {
+            switchNewsNext();
+        }, 5000); // 5秒ごとに自動切り替え
     }
-</style>
+
+    function resetNewsTimer() {
+        if (newsTimer) clearInterval(newsTimer);
+        startNewsTimer();
+    }
+
+    // ページ読み込み時にタイマー開始
+    document.addEventListener('DOMContentLoaded', startNewsTimer);
+</script>
 
     <!-- Hero Section -->
     <header class="hero-gradient text-white py-16 px-4 text-center">
